@@ -38,7 +38,7 @@ const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
 const newPosts = computed(() => [...posts].sort((a, b) => a.date_ago - b.date_ago))
 const currentPost = ref({})
 const clickCurrentPost = (post) => {
-    currentPost.value = post;
+    currentPost.value = post
 }
 
 // 處理Route Link的Active Class判別
