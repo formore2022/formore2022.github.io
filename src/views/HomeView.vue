@@ -15,7 +15,7 @@
 
 <script>
 // 引入component "PostDialog" 進行使用
-import PostDialog from '../components/PostDialog.vue'
+import PostDialog from '../components/PostDialog.vue';
 
 export default {
     components: {
