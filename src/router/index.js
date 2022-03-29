@@ -7,6 +7,7 @@ import AboutView from '../views/AboutView.vue'
 const routes = [
   {
     path: '/',
+    redirect: '/hot',
     name: 'home',
     component: HomeView,
     children: [
