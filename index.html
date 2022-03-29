@@ -7,9 +7,7 @@
             // When the single page app is loaded further down in this file,
             // the correct url will be waiting in the browser's history for
             // the single page app to route accordingly.
-            const BASE_URL = ''
             (function(l) {
-                if (l.pathname.replace(BASE_URL || '') === '/') l.pathname = '/hot'
                 if (l.search[1] === '/' ) {
                     var decoded = l.search.slice(1).split('&').map(function(s) { 
                         return s.replace(/~and~/g, '&')
@@ -18,4 +16,4 @@
                         l.pathname.slice(0, -1) + decoded + l.hash
                     );
                 }
-            }(window.location))</script><script defer="defer" src="/js/chunk-vendors.28de55d8.js"></script><script defer="defer" src="/js/app.6964b02b.js"></script><link href="/css/chunk-vendors.cc486695.css" rel="stylesheet"><link href="/css/app.14a81add.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but formore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+            }(window.location))</script><script defer="defer" src="/js/chunk-vendors.28de55d8.js"></script><script defer="defer" src="/js/app.8998a7c8.js"></script><link href="/css/chunk-vendors.cc486695.css" rel="stylesheet"><link href="/css/app.14a81add.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but formore doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
