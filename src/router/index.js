@@ -7,6 +7,7 @@ import AboutView from '../views/AboutView.vue'
 const routes = [
   {
     path: '/',
+    redirect: '/hot',
     name: 'home',
     component: HomeView,
     children: [
@@ -33,6 +34,5 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-router.replace({ path: '/', redirect: '/hot' })
 
 export default router
