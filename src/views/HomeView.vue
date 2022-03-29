@@ -7,7 +7,7 @@
             <router-link :class="navLinkClass('hot')" to="/hot">熱門</router-link>
         </li>
     </ul>
-    <div class="mx-5 py-5">
+    <div class="mx-1 mx-sm-5 py-3 py-sm-5">
         <router-view/>
     </div>
     <PostDialog />
@@ -47,7 +47,7 @@ const currentMatchesNames = computed(() => route.matched.map((s) => s.name));
 const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name);
 
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
-provide('hotPosts', hotPosts);
+provide('hotPosts', posts);
 provide('newPosts', newPosts);
 provide('currentPost', currentPost);
 provide('clickCurrentPost', clickCurrentPost);
@@ -64,7 +64,7 @@ provide('clickCurrentPost', clickCurrentPost);
 
         &.router-link-exact-active {
             color: var(--main-grean-color);
-            border-bottom: 3px solid var(--main-grean-color);
+            border-bottom: 4px solid var(--main-grean-color);
         }
     }
 }

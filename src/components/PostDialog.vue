@@ -64,7 +64,7 @@ const post = inject('currentPost')
         width: 40px;
         height: 40px;
         color: #fff;
-        background: var(--avatar-green-color);
+        background: var(--dark-green-color);
     }
 
     h4 {

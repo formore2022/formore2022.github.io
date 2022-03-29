@@ -18,11 +18,11 @@
                     </div>
                     <!-- 系名．ID欄 -->
                     <div class="col text-start">
-                        <span class="me-2">{{ post.department }}</span>
-                        <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <span>{{ post.department }}</span>
+                        <svg class="mx-2" width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="3.13794" cy="3.5" r="3" fill="#303030"/>
                         </svg>
-                        <span class="ms-2">@{{ post.user }}</span>
+                        <span>@{{ post.user }}</span>
                     </div>
                     <!-- 垂直分隔欄 -->
                     <div class="col-auto d-flex" style="height: 40px">
@@ -139,7 +139,7 @@ const clickCurrentPost = inject('clickCurrentPost')
         width: 40px;
         height: 40px;
         color: #fff;
-        background: var(--avatar-green-color);
+        background: var(--dark-green-color);
     }
 
     .vr {
