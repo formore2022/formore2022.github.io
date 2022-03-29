@@ -18,7 +18,9 @@
             // the single page app to route accordingly.
             const BASE_URL = '/formore'
             (function(l) {
-                if (l.pathname.replace(BASE_URL) === '/') l.pathname = '/hot'
+                if (BASE_URL && l.pathname.replace(BASE_URL, '') === '/') l.pathname = '/hot'
+                else if (l.pathname === '/') l.pathname = '/hot'
+                
                 if (l.search[1] === '/' ) {
                     var decoded = l.search.slice(1).split('&').map(function(s) { 
                         return s.replace(/~and~/g, '&')
