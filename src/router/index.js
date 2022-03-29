@@ -33,5 +33,6 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+router.replace({ path: '/', redirect: '/hot' })
 
 export default router
