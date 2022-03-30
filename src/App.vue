@@ -42,13 +42,13 @@
                     </ul>
                 </div>
                 <div class="col text-start">
-                    <labeL id="search-area">
+                    <label id="search-area">
                         <input
                             class="form-control me-2"
                             type="search"
                             placeholder="搜尋more貼文"
                         />
-                    </labeL>
+                    </label>
                 </div>
                 <div class="col-auto">
                     <button id="login-btn" class="btn bg-dark-green text-white me-0 me-lg-5">登入</button>

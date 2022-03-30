@@ -43,8 +43,8 @@ const subRoutes = ref([
     },
 ])
 const posts = reactive(postsJson)
-const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
-const newPosts = computed(() => [...posts].sort((a, b) => a.date_ago - b.date_ago))
+//const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
+//const newPosts = computed(() => [...posts].sort((a, b) => a.date_ago - b.date_ago))
 const currentPost = ref({})
 const clickCurrentPost = (post) => {
     currentPost.value = post
@@ -57,7 +57,7 @@ const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name);
 
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
 provide('hotPosts', posts);
-provide('newPosts', newPosts);
+//provide('newPosts', newPosts);
 provide('currentPost', currentPost);
 provide('clickCurrentPost', clickCurrentPost);
 </script>
