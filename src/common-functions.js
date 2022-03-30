@@ -22,10 +22,11 @@ const dateAgoFilter = (dateAgo) => {
 
 // 將文字進行解析
 const replaceText = (post, property, showMoreStr) => {
-    post[property] = post[property].replaceAll(/\n/gi, "<br>");
-    post[property] = post[property].replaceAll(/([#@](?:[^\x00-\x7F]|\w)+)/gi, (match) => `<span class="hash-tag">${match}</span>`);
-    post[property] = post[property].replaceAll(/!\[show_more\]/gi, showMoreStr);
-    post[property] = post[property].replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, (match) => replaceImageTagMapper(match, post));
+    let str = JSON.parse(JSON.stringify(post[property]))
+    str = str.replaceAll(/\n/gi, "<br>");
+    str = str.replaceAll(/([#@](?:[^\x00-\x7F]|\w)+)/gi, (match) => `<span class="hash-tag">${match}</span>`);
+    str = str.replaceAll(/!\[show_more\]/gi, showMoreStr);
+    post[property] = str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, (match) => replaceImageTagMapper(match, post));
 }
 
 // 將img tag進行解析
@@ -67,8 +68,13 @@ const parsePreviewContent = (post) => {
 
 // 解析整份文章，並回傳整份解析結果
 const parseContent = (post) => {
+    // 若解析過，不再重新解析
+    if (post?.content_parsed) return post?.content;
+
+    // 未解析過
     if (!post?.content) return "";
     replaceText(post, 'content', '');
+    post.content_parsed = true;
     return post.content;
 };
 

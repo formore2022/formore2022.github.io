@@ -7,7 +7,7 @@
     <div class="mx-1 mx-sm-5 py-3 py-sm-5">
         <router-view/>
     </div>
-    <PostDialog />
+    <PostDialog :post="currentPost"/>
 </template>
 
 <script>
@@ -58,7 +58,6 @@ const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name);
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
 provide('hotPosts', posts);
 //provide('newPosts', newPosts);
-provide('currentPost', currentPost);
 provide('clickCurrentPost', clickCurrentPost);
 </script>
 

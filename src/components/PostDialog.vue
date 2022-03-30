@@ -56,14 +56,14 @@
                                         viewBox="0 0 26 23"
                                         :fill="post.liked ? 'red' : 'none'"
                                         @click="
-                                            post.liked = !(post.liked || false);
-                                            post.liked ? post.likes++ : post.likes--;
+                                            post.liked = !(post?.liked || false);
+                                            post?.liked ? post.likes++ : post.likes--;
                                         "
                                         xmlns="http://www.w3.org/2000/svg"
                                     >
                                         <path
                                             d="M1.23437 8.50347C0.440508 4.789 1.56252 1.69007 6.15635 1.07453C10.7502 0.45899 12.6396 3.81588 12.5602 5.27514C12.5602 3.55057 15.8362 0.522666 19.5197 1.07453C24.1242 1.76436 24.6677 6.24825 23.6743 9.06064C22.6809 11.873 16.3795 17.9577 12.5602 21C8.78491 18.108 2.02824 12.2179 1.23437 8.50347Z"
-                                            :stroke="post.liked ? 'red' : 'black'"
+                                            :stroke="post?.liked ? 'red' : 'black'"
                                             stroke-width="2"
                                         />
                                     </svg>
@@ -132,11 +132,10 @@ export default {
 </script>
 
 <script setup>
-import { inject } from "vue";
 import { numberFilter, dayAgoFilter, dateAgoFilter, parseContent } from '@/common-functions.js';
 
-// inject需要用的參數進行使用，需在parent或grand-parent進行provide
-const post = inject('currentPost')
+// 讀入parent傳進來的參數
+const props = defineProps(['post'])
 </script>
 
 <style scoped lang="scss">
