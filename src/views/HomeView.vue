@@ -1,10 +1,7 @@
 <template>
     <ul id="home-nav" class="nav mt-2 mt-sm-5 mx-1 mx-sm-5 px-4">
-        <li class="nav-item mx-3">
-            <router-link :class="navLinkClass('new')" to="/new">最新</router-link>
-        </li>
-        <li class="nav-item mx-3">
-            <router-link :class="navLinkClass('hot')" to="/hot">熱門</router-link>
+        <li v-for="subRoute in subRoutes" :key="subRoute.name" class="nav-item mx-3">
+            <router-link :class="navLinkClass(subRoute.name)" :to="subRoute.path">{{ subRoute.text }}</router-link>
         </li>
     </ul>
     <div class="mx-1 mx-sm-5 py-3 py-sm-5">
@@ -33,6 +30,18 @@ import { getNavLinkClass } from '@/common-functions.js';
 import postsJson from '@/assets/posts.json';
 
 // 定義參數
+const subRoutes = ref([
+    {
+        name: 'new',
+        path: '/new',
+        text: '最新',
+    },
+    {
+        name: 'hot',
+        path: '/hot',
+        text: '熱門',
+    },
+])
 const posts = reactive(postsJson)
 const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
 const newPosts = computed(() => [...posts].sort((a, b) => a.date_ago - b.date_ago))
@@ -63,8 +72,8 @@ provide('clickCurrentPost', clickCurrentPost);
         color: var(--dark-black-color);
 
         &.router-link-exact-active {
-            color: var(--main-grean-color);
-            border-bottom: 4px solid var(--main-grean-color);
+            color: var(--light-green-color);
+            border-bottom: 4px solid var(--light-green-color);
         }
     }
 }
