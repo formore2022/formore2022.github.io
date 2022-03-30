@@ -31,31 +31,28 @@
                     <!-- 日期欄 -->
                     <div class="col-auto">{{ dateAgoFilter(post.date_ago) }}</div>
                 </div>
-                <hr class="mb-0" />
+                <hr class="mb-0 opacity-75" />
             </div>
             
             <!-- BODY區 -->
             <div class="card-body">
                 <h4 class="text-start mb-3 px-3">{{ post.title }}</h4>
                 <div
-                    class="card-text text-start px-3"
+                    class="card-text text-start px-3 "
                     v-html="parsePreviewContent(post)"
                 ></div>
             </div>
             
             <!-- 圖片預覽區 -->
-            <img
-                v-show="post.coverimg"
-                :src="post.coverimg"
-                class="img-fluid"
-                style="width: 100%"
-            />
+            <div v-show="post.coverimg" class="ratio ratio-16x9">
+                <img :src="post.coverimg" class="img-fluid object-fit-cover"/>
+            </div>
         </div>
         
         <!-- FOOTER區 -->
         <div class="card-footer border-0 bg-transparent px-2 py-3">
             <!-- 若有封面圖片，不顯示footer的hr -->
-            <hr v-show="!post.coverimg" />
+            <hr v-show="!post.coverimg" class="opacity-75" />
             <!-- 按鈕區 -->
             <div class="row mx-auto justify-content-center gx-2 gx-lg-4">
                 <div class="col-auto d-flex justify-content-center align-items-center">
@@ -65,8 +62,8 @@
                         viewBox="0 0 26 23"
                         :fill="post.liked ? 'red' : 'none'"
                         @click="
-                        post.liked = !(post.liked || false);
-                        post.liked ? post.likes++ : post.likes--;
+                            post.liked = !(post.liked || false);
+                            post.liked ? post.likes++ : post.likes--;
                         "
                         xmlns="http://www.w3.org/2000/svg"
                     >
@@ -157,7 +154,7 @@ const clickCurrentPost = inject('clickCurrentPost')
     }
 
     .card-text {
-        color: var(--content-text-color);
+        color: var(--dark-gray-color);
         font-size: 14px;
     }
 
