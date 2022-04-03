@@ -8,7 +8,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import {VueMasonryPlugin} from 'vue-masonry';
+import { VueMasonryPlugin } from 'vue-masonry';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";

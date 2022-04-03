@@ -1,9 +1,10 @@
 <template>
     <div class="hot">
         <div
-            v-masonry="containerId"
+            v-masonry="'containerId'"
             transition-duration="0.1s"
             item-selector=".grid-item"
+            percent-position="true"
             class="row row-cols-1 row-cols-md-2 row-cols-xxl-3 g-3 g-sm-5"
         >
             <div v-masonry-tile class="col grid-item" v-for="(post, index) in posts" :key="index">
