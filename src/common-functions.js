@@ -78,4 +78,23 @@ const parseContent = (post) => {
     return post.content;
 };
 
-export { getNavLinkClass, numberFilter, dateAgoFilter, dayAgoFilter, parsePreviewContent, parseContent };
+const adjustMultipleModalsLayer = () => {
+    // 紀錄原modal的位置，並設定每一層modal的backdrop及主體的z-index
+    let nodeScrollTopMap = {};
+    document.querySelectorAll('.modal-backdrop').forEach((node, index) => {
+        node.style["z-index"] = 1050 + (index) * 10;
+    });
+    document.querySelectorAll('.modal').forEach((node, index) => {
+        nodeScrollTopMap[node.id] = node.scrollTop
+        node.style["z-index"] = 1055 + (index) * 10;
+    })
+
+    // 將打開的modal滾到原來的位置
+    console.log(nodeScrollTopMap)
+    setTimeout(() => {
+        for(let id in nodeScrollTopMap)
+            document.getElementById(id).scrollTop = nodeScrollTopMap[id]
+    }, 500)
+}
+
+export { getNavLinkClass, numberFilter, dateAgoFilter, dayAgoFilter, parsePreviewContent, parseContent, adjustMultipleModalsLayer };

@@ -3,9 +3,7 @@
         <!-- MODAL點擊觸發區 -->
         <div
             class="cursor-pointer"
-            @click="clickCurrentPost(post)"
-            data-bs-toggle="modal"
-            data-bs-target="#postDialogModal"
+            @click="clickPost(post)"
         >
             <!-- HEADER區 -->
             <div class="card-header border-0 bg-transparent px-2 pt-3 pb-2">
@@ -118,14 +116,21 @@
 </template>
 
 <script setup>
-import { defineProps, inject } from 'vue';
+import { ref, defineProps, inject } from 'vue';
 import { numberFilter, dateAgoFilter, parsePreviewContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
 const props = defineProps(['post'])
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
-const clickCurrentPost = inject('clickCurrentPost')
+const setCurrentPost = inject('setCurrentPost')
+const togglePostDialogModal = inject('togglePostDialogModal')
+
+// 定義方法
+const clickPost = (post) => {
+    setCurrentPost(post);
+    togglePostDialogModal();
+}
 </script>
 
 <style scoped lang="scss">

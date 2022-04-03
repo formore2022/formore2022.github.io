@@ -7,16 +7,19 @@
     <div class="mx-1 mx-sm-5 py-3 py-sm-5">
         <router-view/>
     </div>
-    <PostDialog :post="currentPost"/>
+    <PostDialog ref="postDialogRef" :post="currentPost" />
+    <EnvelopeDialog ref="envelopeDialogRef" />
 </template>
 
 <script>
 // 引入component "PostDialog" 進行使用
 import PostDialog from '../components/PostDialog.vue';
+import EnvelopeDialog from '../components/EnvelopeDialog.vue';
 
 export default {
     components: {
         PostDialog,
+        EnvelopeDialog,
     }
 };
 </script>
@@ -30,6 +33,8 @@ import { getNavLinkClass } from '@/common-functions.js';
 import postsJson from '@/assets/posts.json';
 
 // 定義參數
+const postDialogRef = ref()
+const envelopeDialogRef = ref()
 const subRoutes = ref([
     {
         name: 'new',
@@ -44,21 +49,21 @@ const subRoutes = ref([
 ])
 const posts = reactive(postsJson)
 //const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
-//const newPosts = computed(() => [...posts].sort((a, b) => a.date_ago - b.date_ago))
+
+// 目前點選的文章object reference
 const currentPost = ref({})
-const clickCurrentPost = (post) => {
-    currentPost.value = post
-}
+const setCurrentPost = (post) => currentPost.value = post
 
 // 處理Route Link的Active Class判別
 const route = useRoute();
-const currentMatchesNames = computed(() => route.matched.map((s) => s.name));
-const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name);
+const currentMatchesNames = computed(() => route.matched.map((s) => s.name))
+const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name)
 
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
-provide('hotPosts', posts);
-//provide('newPosts', newPosts);
-provide('clickCurrentPost', clickCurrentPost);
+provide('hotPosts', posts)
+provide('setCurrentPost', setCurrentPost)
+provide('togglePostDialogModal', ()=> postDialogRef.value.togglePostDialogModal())
+provide('toggleEnvelopeDialogModal', ()=> envelopeDialogRef.value.toggleEnvelopeDialogModal())
 </script>
 
 <style scoped lang="scss">

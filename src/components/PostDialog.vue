@@ -1,5 +1,5 @@
 <template>
-    <div class="post_dialog modal fade" id="postDialogModal" tabindex="-1">
+    <div ref="thisModalRef" class="post_dialog modal fade" id="postDialogModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header border-0 d-block">
@@ -122,7 +122,7 @@
 
 <script>
 // 引入component "PostComment" 進行使用
-import PostComment from '../components/PostComment.vue'
+import PostComment from './PostComment.vue'
 
 export default {
     components: {
@@ -132,10 +132,24 @@ export default {
 </script>
 
 <script setup>
-import { numberFilter, dayAgoFilter, dateAgoFilter, parseContent } from '@/common-functions.js';
+import { ref, onMounted } from 'vue';
+import { numberFilter, dayAgoFilter, dateAgoFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
+import { Modal } from 'bootstrap';
 
 // 讀入parent傳進來的參數
 const props = defineProps(['post'])
+
+// 定義參數
+const thisModalRef = ref()
+
+// 定義modal可被呼叫的方法，並Expose給父元素
+let thisModal;
+onMounted(() => { thisModal = new Modal(thisModalRef.value, {}) })
+const togglePostDialogModal = () => {
+    thisModal.toggle();
+    adjustMultipleModalsLayer();
+}
+defineExpose({ togglePostDialogModal });
 </script>
 
 <style scoped lang="scss">
