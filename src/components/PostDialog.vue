@@ -12,7 +12,7 @@
                         </div>
                         <!-- 系名．ID欄．日期欄 -->
                         <div class="col text-start">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex flex-wrap align-items-center">
                                 <span class="info-text me-2">{{ post?.department }}</span>
                                 <svg width="10" height="10" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="3.13794" cy="3.5" r="3" fill="#C4C4C4"/>
@@ -186,6 +186,12 @@ defineExpose({ togglePostDialogModal })
         display: flex;
         flex-direction: column;
         justify-content: center;
+
+        @media (max-width: 500px) {
+            width: 40px;
+            padding-left: 0;
+            padding-right: 0;
+        }
 
         .btn-close {
             color: #FFF !important;
