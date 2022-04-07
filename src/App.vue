@@ -2,45 +2,15 @@
     <!-- 上方導航列 -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light-green py-0">
         <div class="container-fluid">
-            <a class="navbar-brand p-0" href="/"><img src="@/assets/banner.png" height="65"/></a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
+            <!-- 小於LG時的漢堡鈕 -->
+            <label for="sidebar-toggle" type="button" id="sidebarCollapse" class="navbar-toggler" @click="updateM">
+                <i class="fas fa-align-left"></i>
                 <span class="navbar-toggler-icon"></span>
-            </button>
-            <div
-                class="row collapse navbar-collapse justify-content-between py-3 py-lg-0"
-                id="navbarSupportedContent"
-            >
-                <div class="d-block d-lg-none col-12 mt-2">
-                    <ul class="nav flex-column align-items-center">
-                        <li v-for="mainRoute in mainRoutes" :key="mainRoute.name" class="nav-item">
-                            <router-link :class="navLinkClass(mainRoute.name)" :to="mainRoute.path">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    :width="mainRoute.icon.width"
-                                    :height="mainRoute.icon.height"
-                                    :viewBox="mainRoute.icon.viewBox"
-                                    :fill="mainRoute.icon.fill"
-                                >
-                                    <path v-for="(path, index) in mainRoute.icon.paths" :key="index"
-                                        :d="path.d"
-                                        :fill="navLinkClass(mainRoute.name).active ? '#FFF': '#c9caca'"
-                                        :stroke="path.stroke"
-                                        :stroke-width="path.strokeWidth"
-                                    />
-                                </svg>
-                                <span class="ms-2">{{ mainRoute.text }}</span>
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
+            </label>
+
+            <!-- 主導覽列內容 -->
+            <a class="navbar-brand p-0" href="/"><img src="@/assets/banner.png" height="65"/></a>
+            <div class="row collapse navbar-collapse justify-content-between py-3 py-lg-0">
                 <div class="col text-start">
                     <label id="search-area">
                         <input
@@ -54,14 +24,19 @@
                     <button id="login-btn" class="btn bg-dark-green text-white me-0 me-lg-5">登入</button>
                 </div>
             </div>
+
+            <!-- 小於LG時，右側填充物 -->
+            <div id="spacer"></div>
         </div>
     </nav>
 
     <!-- 主內容區 -->
     <div id="main" class="container-fluid">
-        <div class="row flex-nowrap">
+        <input id='sidebar-toggle' type='checkbox' hidden="true" />
+
+        <div id="wrapper" class="row flex-nowrap">
             <!-- 左側邊欄 -->
-            <div class="d-none d-lg-block col-auto sidebar text-white min-vh-100 bg-light1 py-3">
+            <div id="sidebar" class="col-auto text-white min-vh-100 bg-light1 py-3">
                 <ul class="nav flex-column align-items-start">
                     <li v-for="mainRoute in mainRoutes" :key="mainRoute.name" class="nav-item">
                         <router-link :class="navLinkClass(mainRoute.name)" :to="mainRoute.path">
@@ -123,13 +98,17 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { getNavLinkClass } from '@/common-functions.js';
+
+// inject需要用的參數進行使用，需在parent或grand-parent進行provide
+//（APP的上層就是AppCreate時use的那些plugin們）
+const redrawVueMasonry = inject('redrawVueMasonry')
 
 // 定義參數
 const mainRoutes = ref([
     {
-        name: 'hot',
+        name: 'home',
         path: '/hot',
         text: '首頁',
         icon: {
@@ -238,7 +217,13 @@ const navLinkClass = (name) => ({
         "d-flex": true,
         "align-items-center": true,
     }
-});
+})
+
+// 定義方法
+const reDrawPosts = function() {
+    // SetTimeout是因為要先等CSS的動畫跑完
+    setTimeout(() => redrawVueMasonry('containerId'), 500);
+}
 </script>
 
 <style lang="scss">
@@ -257,6 +242,8 @@ const navLinkClass = (name) => ({
 
     --light2-color: #f6f6f6;
     --light1-color: #ececec;
+
+    --light-yellow-color: #F4F0DA;
 }
 
 /* 常用全域css定義區 */
@@ -341,10 +328,11 @@ const navLinkClass = (name) => ({
     input {
         height: 27px;
         padding: 10px 35px;
+        border: none;
         border-radius: 37px;
 
         &::placeholder {
-            font-size: 16px;
+            font-size: 14px;
             color: var(--gray-color) !important;
         }
     }
@@ -355,25 +343,15 @@ const navLinkClass = (name) => ({
     padding: 4px 12px;
 }
 
-.navbar {
-
-    a {
-        font-weight: 400;
-        color: var(--light-gray-color);
-
-        &:hover, &:visited, &:link, &:active {
-            color: var(--light-gray-color);
-        }
-
-        &.router-link-exact-active {
-            color: #FFF !important;
-        }
-    }
-}
-
-.sidebar {
-    width: 240px !important;
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
     font-size: 20px;
+    transition: all 0.2s;
+
+    @media (max-width: 992px) {
+        margin-left: -250px !important;
+    }
 
     hr {
         border-top: 2px solid var(--dark-black-color);
@@ -387,8 +365,22 @@ const navLinkClass = (name) => ({
             color: var(--dark-black-color);
         }
 
-        &.router-link-exact-active {
+        &.router-link-exact-active, &.active {
             color: var(--light-green-color);
+        }
+    }
+}
+
+#sidebar-toggle:checked ~ #wrapper {
+    & > #sidebar {
+        margin-left: -250px;
+    }
+
+    @media (max-width: 992px) {
+        width: calc(100vw + 250px) !important;
+
+        & > #sidebar {
+            margin-left: 0 !important;
         }
     }
 }

@@ -9,17 +9,20 @@
     </div>
     <PostDialog ref="postDialogRef" :post="currentPost" />
     <EnvelopeDialog ref="envelopeDialogRef" />
+    <AdminPostDialog ref="adminPostDialogRef" :admin-post-key="adminPostKey" />
 </template>
 
 <script>
 // 引入component "PostDialog" 進行使用
 import PostDialog from '../components/PostDialog.vue';
 import EnvelopeDialog from '../components/EnvelopeDialog.vue';
+import AdminPostDialog from '../components/AdminPostDialog.vue';
 
 export default {
     components: {
         PostDialog,
         EnvelopeDialog,
+        AdminPostDialog,
     }
 };
 </script>
@@ -29,12 +32,12 @@ import { useRoute } from "vue-router";
 import { ref, reactive, computed, provide } from 'vue';
 import { getNavLinkClass } from '@/common-functions.js';
 
-// 讀入posts.json
+// 讀入posts.json及admin_post.json
 import postsJson from '@/assets/posts.json';
+import adminPostsJson from '@/assets/admin_posts.json';
 
-// 定義參數
-const postDialogRef = ref()
-const envelopeDialogRef = ref()
+// -------------------- 定義參數 [BEGIN] --------------------
+// Router Map
 const subRoutes = ref([
     {
         name: 'new',
@@ -47,12 +50,22 @@ const subRoutes = ref([
         text: '熱門',
     },
 ])
-const posts = reactive(postsJson)
-//const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
 
-// 目前點選的文章object reference
-const currentPost = ref({})
-const setCurrentPost = (post) => currentPost.value = post
+// Dialog Ref
+const postDialogRef = ref()
+const envelopeDialogRef = ref()
+const adminPostDialogRef = ref()
+
+// Post
+const posts = reactive(postsJson)
+const hotPosts = computed(() => [...posts].sort((a, b) => b.likes - a.likes))
+const currentPost = ref({})                                // 目前點選的文章object reference
+const setCurrentPost = (post) => currentPost.value = post  // setter
+const adminPosts = reactive(adminPostsJson)                // 管理員文章objects
+const adminPostKey = ref()                                 // 管理員文章key
+const setAdminPostKey = (key) => adminPostKey.value = key  // setter
+
+// -------------------- 定義參數 [ END ] --------------------
 
 // 處理Route Link的Active Class判別
 const route = useRoute();
@@ -62,8 +75,11 @@ const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name)
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
 provide('hotPosts', posts)
 provide('setCurrentPost', setCurrentPost)
+provide('adminPosts', adminPosts)
+provide('setAdminPostKey', setAdminPostKey)
 provide('togglePostDialogModal', ()=> postDialogRef.value.togglePostDialogModal())
 provide('toggleEnvelopeDialogModal', ()=> envelopeDialogRef.value.toggleEnvelopeDialogModal())
+provide('toggleAdminPostDialogModal', ()=> adminPostDialogRef.value.toggleAdminPostDialogModal())
 </script>
 
 <style scoped lang="scss">
