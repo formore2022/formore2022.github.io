@@ -133,7 +133,7 @@ export default {
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { numberFilter, dayAgoFilter, dateAgoFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
+import { numberFilter, dateAgoFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
 import { Modal } from 'bootstrap';
 
 // 讀入parent傳進來的參數
@@ -149,7 +149,7 @@ const togglePostDialogModal = () => {
     thisModal.toggle();
     adjustMultipleModalsLayer();
 }
-defineExpose({ togglePostDialogModal });
+defineExpose({ togglePostDialogModal })
 </script>
 
 <style scoped lang="scss">
