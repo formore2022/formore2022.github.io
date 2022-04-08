@@ -1,5 +1,5 @@
 <template>
-    <div ref="thisModalRef" class="post_dialog modal fade" id="postDialogModal" tabindex="-1">
+    <div ref="thisModalRef" class="modal fade" id="postDialogModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header border-0 d-block">

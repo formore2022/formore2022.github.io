@@ -14,9 +14,9 @@
 
 <script>
 // 引入component進行使用
-import PostDialog from '../components/PostDialog.vue';
-import EnvelopeDialog from '../components/EnvelopeDialog.vue';
-import AdminPostDialog from '../components/AdminPostDialog.vue';
+import PostDialog from '@/components/PostDialog.vue';
+import EnvelopeDialog from '@/components/EnvelopeDialog.vue';
+import AdminPostDialog from '@/components/AdminPostDialog.vue';
 
 export default {
     components: {
@@ -51,6 +51,11 @@ const subRoutes = ref([
     },
 ])
 
+// 處理Route Link的Active Class判別
+const route = useRoute();
+const currentMatchesNames = computed(() => route.matched.map((s) => s.name))
+const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name)
+
 // Dialog Ref
 const postDialogRef = ref()
 const envelopeDialogRef = ref()
@@ -66,11 +71,6 @@ const adminPostKey = ref()                                 // 管理員文章key
 const setAdminPostKey = (key) => adminPostKey.value = key  // setter
 
 // -------------------- 定義參數 [ END ] --------------------
-
-// 處理Route Link的Active Class判別
-const route = useRoute();
-const currentMatchesNames = computed(() => route.matched.map((s) => s.name))
-const navLinkClass = (name) => getNavLinkClass(currentMatchesNames, name)
 
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
 provide('hotPosts', posts)

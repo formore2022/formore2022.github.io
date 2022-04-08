@@ -116,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineProps, inject } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { numberFilter, dateAgoFilter, getFirstImageUrl, parsePreviewContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
