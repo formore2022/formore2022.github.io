@@ -40,9 +40,11 @@ const setAdminPostKey = inject('setAdminPostKey')
 // 定義參數
 const thisModalRef = ref()
 const envelopeAnswer = ref('')
+
+// 確認鈕按下時
 const confirm = () => {
     if (envelopeAnswer.value === 'FOMO') {
-        setAdminPostKey('envelope');
+        setAdminPostKey('missing');
         toggleEnvelopeDialogModal();
         toggleAdminPostDialogModal();
     }

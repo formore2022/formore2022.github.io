@@ -9,23 +9,23 @@
                 <!-- Avatar欄 -->
                 <div class="col-auto">
                     <div :class="`avatar rounded-circle d-flex justify-content-center align-items-center ${bgGreen}`">
-                        <img v-if="comment.is_formore" src="@/assets/formore_avatar.png" class="img-fluid" />
-                        <span v-else>{{ comment.user ? comment.user[0] : '' }}</span>
+                        <img v-if="comment?.is_formore" src="@/assets/formore_avatar.png" class="img-fluid" />
+                        <span v-else>{{ comment?.user ? comment.user[0] : '' }}</span>
                     </div>
                 </div>
                 <!-- 系名．ID欄．日期欄 -->
                 <div class="col-auto px-0 text-start info-area">
                     <div class="info-text text-truncate">
-                        @{{ comment.user }}
+                        @{{ comment?.user }}
                     </div>
                     <div class="info-text">
-                        {{ comment.date_ago ? dayAgoFilter(comment.date_ago) : '' }}
+                        {{ comment?.date_ago ? dayAgoFilter(comment.date_ago) : '' }}
                     </div>
                 </div>
                 <!-- 留言區 -->
                 <div 
                     class="col ps-0 text-start" 
-                    v-html="parseContent(comment)"
+                    v-html="parseContent(comment?.content)"
                 ></div>
             </div>
         </div>
@@ -34,7 +34,7 @@
 
 <script setup>
 import { computed, defineProps, inject } from 'vue';
-import { numberFilter, dayAgoFilter, parseContent } from '@/common-functions.js';
+import { dayAgoFilter, parseContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
 const props = defineProps(['comment'])

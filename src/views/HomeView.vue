@@ -13,7 +13,7 @@
 </template>
 
 <script>
-// 引入component "PostDialog" 進行使用
+// 引入component進行使用
 import PostDialog from '../components/PostDialog.vue';
 import EnvelopeDialog from '../components/EnvelopeDialog.vue';
 import AdminPostDialog from '../components/AdminPostDialog.vue';

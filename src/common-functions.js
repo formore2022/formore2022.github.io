@@ -21,63 +21,70 @@ const dateAgoFilter = (dateAgo) => {
 }
 
 // 將文字進行解析
-const replaceText = (post, property, showMoreStr) => {
-    let str = JSON.parse(JSON.stringify(post[property]))
-    str = str.replaceAll(/\n/gi, "<br>");
+const _replaceText = (content, showMoreStr) => {
+    let str = content;
+    str = str.replaceAll(/\n/gi, '<br>');
     str = str.replaceAll(/([#@](?:[^\x00-\x7F]|\w)+)/gi, (match) => `<span class="hash-tag">${match}</span>`);
     str = str.replaceAll(/!\[show_more\]/gi, showMoreStr);
-    post[property] = str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, (match) => replaceImageTagMapper(match, post));
+    str = str.replaceAll(/!\[strong text='([^']*)'\]/gi, (_, match) => `<span class="text-light-green fw-bold">${match}</span>`);
+    return str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, _replaceImageTagMapper);
 }
 
 // 將img tag進行解析
-const replaceImageTagMapper = (match, post) => {
+const _replaceImageTagMapper = (match) => {
     const imgSrcMatches = match.match(/src='([^']*)'/i)
-    const imagePath = imgSrcMatches ? imgSrcMatches[1] : "";
+    const imagePath = imgSrcMatches ? imgSrcMatches[1] : '';
     const imgWidthMatches = match.match(/width='([^']*)'/i)
-    const width = imgWidthMatches ? imgWidthMatches[1] : "";
-    let image = "";
-    if (imagePath !== "") {
+    const width = imgWidthMatches ? imgWidthMatches[1] : '';
+    let image = '';
+    if (imagePath !== '') {
         try {
             image = require(`@/assets/${imagePath}`);
         } catch (error) {
             image = imagePath;
         }
-        if (!post.coverimg) {
-            post.coverimg = image;
-        }
     }
     return `<img src="${image}" width="${width}" class="img-fluid" />`;
 }
 
-// 解析整份文章，並僅回傳預覽內容
-const parsePreviewContent = (post) => {
-    // 若解析過，不再重新解析
-    if (post?.preview) return post?.preview;
+// 解析第一張圖片
+const getFirstImageUrl = (content) => {
+    if (!content) return  null;
 
-    // 未解析過
-    post.preview = post?.content;
-    if (!post.preview) return  '';
-    const showMoreStr = `…<b>顯示更多</b>`;
-    replaceText(post, 'preview', showMoreStr);
-    let preview_end = post.preview.indexOf(showMoreStr);
-    if (preview_end > 0) {
-        post.preview = post.preview.substring(0, preview_end + showMoreStr.length);
+    const matches = content.match(/!\[img src='[^\]]*'[^\]]*\]/gi);
+    if (!matches) return null
+    
+    const imgSrcMatches = matches[0].match(/src='([^']*)'/i)
+    const imagePath = imgSrcMatches ? imgSrcMatches[1] : '';
+    if (imagePath === '') return null;
+
+    let image = '';
+    try {
+        image = require(`@/assets/${imagePath}`);
+    } catch (error) {
+        image = imagePath;
     }
-    return post.preview;
+    return image;
+}
+
+// 解析整份文章，並僅回傳預覽內容
+const parsePreviewContent = (content) => {
+    if (!content) return  '';
+    const showMoreStr = '…<b>顯示更多</b>';
+    content = _replaceText(content, showMoreStr);
+    let preview_end = content.indexOf(showMoreStr);
+    if (preview_end > 0)
+        content = content.substring(0, preview_end + showMoreStr.length);
+    return content;
 };
 
 // 解析整份文章，並回傳整份解析結果
-const parseContent = (post) => {
-    // 若解析過，不再重新解析
-    if (post?.content_parsed) return post?.content;
-
-    // 未解析過
-    if (!post?.content) return "";
-    replaceText(post, 'content', '');
-    post.content_parsed = true;
-    return post.content;
+const parseContent = (content) => {
+    if (!content) return '';
+    return _replaceText(content, '');
 };
 
+// 調整多個modal的層級
 const adjustMultipleModalsLayer = () => {
     // 紀錄原modal的位置，並設定每一層modal的backdrop及主體的z-index
     let nodeScrollTopMap = {};
@@ -97,4 +104,4 @@ const adjustMultipleModalsLayer = () => {
     }, 500)
 }
 
-export { getNavLinkClass, numberFilter, dateAgoFilter, dayAgoFilter, parsePreviewContent, parseContent, adjustMultipleModalsLayer };
+export { getNavLinkClass, numberFilter, dateAgoFilter, dayAgoFilter, getFirstImageUrl, parsePreviewContent, parseContent, adjustMultipleModalsLayer };

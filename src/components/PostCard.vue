@@ -37,20 +37,20 @@
                 <h4 class="text-start mb-3 px-3">{{ post.title }}</h4>
                 <div
                     class="card-text text-start px-3 "
-                    v-html="parsePreviewContent(post)"
+                    v-html="parsePreviewContent(post.content)"
                 ></div>
             </div>
             
             <!-- 圖片預覽區 -->
-            <div v-show="post.coverimg" class="ratio ratio-16x9">
-                <img :src="post.coverimg" class="img-fluid object-fit-cover"/>
+            <div v-show="coverimg" class="ratio ratio-16x9">
+                <img :src="coverimg" class="img-fluid object-fit-cover"/>
             </div>
         </div>
         
         <!-- FOOTER區 -->
         <div class="card-footer border-0 bg-transparent px-2 py-3">
             <!-- 若有封面圖片，不顯示footer的hr -->
-            <hr v-show="!post.coverimg" class="opacity-75" />
+            <hr v-show="!coverimg" class="opacity-75" />
             <!-- 按鈕區 -->
             <div class="row mx-auto justify-content-center gx-2 gx-lg-4">
                 <div class="col-auto d-flex justify-content-center align-items-center">
@@ -116,8 +116,8 @@
 </template>
 
 <script setup>
-import { ref, defineProps, inject } from 'vue';
-import { numberFilter, dateAgoFilter, parsePreviewContent } from '@/common-functions.js';
+import { ref, computed, defineProps, inject } from 'vue';
+import { numberFilter, dateAgoFilter, getFirstImageUrl, parsePreviewContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
 const props = defineProps(['post'])
@@ -125,6 +125,9 @@ const props = defineProps(['post'])
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
 const setCurrentPost = inject('setCurrentPost')
 const togglePostDialogModal = inject('togglePostDialogModal')
+
+// 定義參數
+const coverimg = computed(() => getFirstImageUrl(props.post?.content))
 
 // 定義方法
 const clickPost = (post) => {

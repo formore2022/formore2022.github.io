@@ -3,7 +3,7 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light-green py-0">
         <div class="container-fluid">
             <!-- 小於LG時的漢堡鈕 -->
-            <label for="sidebar-toggle" type="button" id="sidebarCollapse" class="navbar-toggler" @click="updateM">
+            <label for="sidebar-toggle" type="button" id="sidebarCollapse" class="navbar-toggler" @click="reDrawPosts">
                 <i class="fas fa-align-left"></i>
                 <span class="navbar-toggler-icon"></span>
             </label>
@@ -105,7 +105,7 @@ import { getNavLinkClass } from '@/common-functions.js';
 //（APP的上層就是AppCreate時use的那些plugin們）
 const redrawVueMasonry = inject('redrawVueMasonry')
 
-// 定義參數
+// Router Map
 const mainRoutes = ref([
     {
         name: 'home',
@@ -146,7 +146,6 @@ const mainRoutes = ref([
         }
     },
 ])
-
 const secondRoutes = ref([
     {
         name: 'xx',
@@ -207,7 +206,6 @@ const secondRoutes = ref([
     },
 ])
 
-
 // 處理Route Link的Active Class判別
 const route = useRoute();
 const currentMatchesNames = computed(() => route.matched.map((s) => s.name));
@@ -219,7 +217,7 @@ const navLinkClass = (name) => ({
     }
 })
 
-// 定義方法
+// 重繪貼文masonry方法
 const reDrawPosts = function() {
     // SetTimeout是因為要先等CSS的動畫跑完
     setTimeout(() => redrawVueMasonry('containerId'), 500);
@@ -273,6 +271,10 @@ const reDrawPosts = function() {
 
 .text-gray {
     color: var(--gray-color) !important;
+}
+
+.text-dark-black {
+    color: var(--dark-black-color) !important;
 }
 
 .text-light-black {
