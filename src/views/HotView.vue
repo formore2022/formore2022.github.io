@@ -1,5 +1,5 @@
 <template>
-    <div class="hot">
+    <div>
         <div
             v-masonry="'containerId'"
             transition-duration="0.1s"
@@ -16,7 +16,7 @@
 
 <script>
 // 引入component進行使用
-import PostCard from '../components/PostCard.vue'
+import PostCard from '@/components/PostCard.vue'
 
 export default {
     components: {

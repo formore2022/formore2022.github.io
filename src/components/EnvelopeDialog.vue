@@ -1,5 +1,5 @@
 <template>
-    <div ref="thisModalRef" class="envelope_dialog modal fade" id="envelopeDialogModal" tabindex="-1">
+    <div ref="thisModalRef" class="modal fade" id="envelopeDialogModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0">
                 <div class="modal-body p-0 align-items-center justify-content-center text-center">
@@ -63,7 +63,7 @@ defineExpose({ toggleEnvelopeDialogModal })
 <style scoped lang="scss">
 .modal-content {
     font-size: 18px;
-    background: var(--light-yellow-color);
+    background: #F4F0DA;
     border-radius: 20px !important;
 }
 .deco-radius {

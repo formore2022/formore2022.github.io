@@ -3,13 +3,13 @@
         <hr class="opacity-75 my-3" />
         <div
             class="cursor-pointer"
-            @click="toggleEnvelopeDialogModal"
+            @click="commentOnClick"
         >
-            <div class="row align-items-center">
+            <div class="row flex-nowrap align-items-center">
                 <!-- Avatar欄 -->
                 <div class="col-auto">
                     <div :class="`avatar rounded-circle d-flex justify-content-center align-items-center ${bgGreen}`">
-                        <img v-if="comment?.is_formore" src="@/assets/formore_avatar.png" class="img-fluid" />
+                        <img v-if="comment?.is_formore" src="@/assets/formore_avatar.png" class="img-fluid rounded-circle" />
                         <span v-else>{{ comment?.user ? comment.user[0] : '' }}</span>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                 </div>
                 <!-- 留言區 -->
                 <div 
-                    class="col ps-0 text-start" 
+                    class="col ps-0 text-break text-start" 
                     v-html="parseContent(comment?.content)"
                 ></div>
             </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, inject } from 'vue';
+import { computed, inject } from 'vue';
 import { dayAgoFilter, parseContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
@@ -46,6 +46,12 @@ const toggleEnvelopeDialogModal = inject('toggleEnvelopeDialogModal')
 const bgGreen = computed(() => {
     return `bg-${props['comment'].is_formore ? 'light': 'dark'}-green`
 })
+
+// 按下comment時
+const commentOnClick = () => {
+    if (props.comment?.is_formore)
+        toggleEnvelopeDialogModal();
+}
 </script>
 
 <style scoped lang="scss">

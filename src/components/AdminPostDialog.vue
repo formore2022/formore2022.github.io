@@ -1,5 +1,5 @@
 <template>
-    <div ref="thisModalRef" class="admin_post_dialog modal fade" id="adminPostDialogModal" tabindex="-1">
+    <div ref="thisModalRef" class="modal fade" id="adminPostDialogModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content border-0">
                 <div class="modal-header border-0 d-block position-relative">
@@ -7,7 +7,7 @@
                         <!-- Avatar欄 -->
                         <div class="col-auto">
                             <div class="avatar rounded-circle d-flex justify-content-center align-items-center">
-                                <img src="@/assets/formore_avatar.png" class="img-fluid" />
+                                <img src="@/assets/formore_avatar.png" class="img-fluid rounded-circle" />
                             </div>
                         </div>
                         <!-- 系名．ID欄．日期欄 -->
@@ -92,7 +92,7 @@ defineExpose({ toggleAdminPostDialogModal })
 
 <style scoped lang="scss">
 .modal-content {
-    border-radius: 20px !important;
+    border-radius: 0 !important;
 
     .modal-footer {
         border-bottom-left-radius: 20px;
