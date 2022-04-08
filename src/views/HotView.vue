@@ -15,7 +15,7 @@
 </template>
 
 <script>
-// 引入component "PostCard" 進行使用
+// 引入component進行使用
 import PostCard from '../components/PostCard.vue'
 
 export default {

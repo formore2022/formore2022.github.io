@@ -12,16 +12,7 @@
                         </div>
                         <!-- 系名．ID欄．日期欄 -->
                         <div class="col text-start">
-                            <div class="d-flex flex-wrap align-items-center">
-                                <span class="info-text me-2">{{ post?.department }}</span>
-                                <svg width="10" height="10" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="3.13794" cy="3.5" r="3" fill="#C4C4C4"/>
-                                </svg>
-                                <span class="info-text ms-2">@{{ post?.user }}</span>
-                            </div>
-                            <div class="info-text">
-                                {{ post?.date_ago ? dateAgoFilter(post.date_ago) : '' }}
-                            </div>
+                            <PostHeaderInfo :department="post?.department" :user="post?.user" :date_ago="post?.date_ago" />
                         </div>
                         <!-- 關閉鈕 -->
                         <div class="col-auto btn-close-wrapper">
@@ -35,11 +26,7 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <h4 class="text-start mb-3 px-4">{{ post?.title }}</h4>
-                    <div
-                        class="card-text text-start px-4 pb-4"
-                        v-html="parseContent(post)"
-                    ></div>
+                    <PostContent :title="post?.title" :content="post?.content" />
                 </div>
                 <div class="modal-footer d-block border-0 p-5 bg-light2">
                     <!-- 按鈕區 -->
@@ -121,11 +108,15 @@
 </template>
 
 <script>
-// 引入component "PostComment" 進行使用
+// 引入component進行使用
+import PostHeaderInfo from './PostHeaderInfo.vue'
+import PostContent from './PostContent.vue'
 import PostComment from './PostComment.vue'
 
 export default {
     components: {
+        PostHeaderInfo,
+        PostContent,
         PostComment,
     }
 };
@@ -133,7 +124,7 @@ export default {
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import { numberFilter, dateAgoFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
+import { numberFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
 import { Modal } from 'bootstrap';
 
 // 讀入parent傳進來的參數
@@ -169,15 +160,6 @@ defineExpose({ togglePostDialogModal })
         font-size: 18px;
     }
 
-    h4 {
-        font-size: 30px;
-    }
-
-    .info-text {
-        color: #000;
-        font-size: 18px;
-    }
-
     .btn-close-wrapper {
         margin-top: calc(-4rem - 9px);
         width: 90px;
@@ -199,12 +181,6 @@ defineExpose({ togglePostDialogModal })
             background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFF'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E") center/1em auto no-repeat;
             margin: 0 auto;
         }
-    }
-
-    .card-text {
-        color: var(--dark-gray-color);
-        font-size: 18px;
-        line-height: 40px;
     }
 }
 </style>

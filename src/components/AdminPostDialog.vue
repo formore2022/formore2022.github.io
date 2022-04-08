@@ -12,16 +12,7 @@
                         </div>
                         <!-- 系名．ID欄．日期欄 -->
                         <div class="col text-start">
-                            <div class="d-flex align-items-center">
-                                <span class="info-text me-2">管理員</span>
-                                <svg width="10" height="10" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="3.13794" cy="3.5" r="3" fill="#C4C4C4"/>
-                                </svg>
-                                <span class="info-text ms-2">@Formore_2021</span>
-                            </div>
-                            <div class="info-text">
-                                {{ post?.date_ago ? dateAgoFilter(post.date_ago) : '' }}
-                            </div>
+                            <PostHeaderInfo :department="'管理員'" :user="'Formore_2021'" :date_ago="post?.date_ago" />
                         </div>
                         <!-- 關閉鈕 -->
                         <div class="col-auto btn-close-wrapper">
@@ -33,6 +24,8 @@
                             ></button>
                         </div>
                     </div>
+
+                    <!-- LOGO -->
                     <svg id="admin-logo" width="200" height="226" viewBox="0 0 266 300" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <rect width="266" height="300" fill="url(#pattern0)"/>
                         <defs>
@@ -44,10 +37,14 @@
                     </svg>
                 </div>
                 <div class="modal-body">
-                    <div
-                        class="card-text text-start px-4 pb-4"
-                        v-html="parseContent(post)"
-                    ></div>
+                    <PostContent :title="post?.title" :content="post?.content" />
+                    <div v-if="post?.hidden" class="form-check text-start align-items-center justify-content-center px-4 pb-4 ms-4">
+                        <input class="form-check-input" type="checkbox" id="agree" v-model="agree" @click="agree = !agree">
+                        <label class="form-check-label text-light-green" for="agree">
+                            {{ post.hidden?.tip }}
+                        </label>
+                    </div>
+                    <PostContent v-if="post?.hidden && agree" :title="null" :content="post.hidden?.content" />
                 </div>
             </div>
         </div>
@@ -55,19 +52,21 @@
 </template>
 
 <script>
-// 引入component "PostComment" 進行使用
-import PostComment from './PostComment.vue'
+// 引入component進行使用
+import PostHeaderInfo from './PostHeaderInfo.vue'
+import PostContent from './PostContent.vue'
 
 export default {
     components: {
-        PostComment,
+        PostHeaderInfo,
+        PostContent,
     }
 };
 </script>
 
 <script setup>
 import { ref, computed, inject, onMounted } from 'vue';
-import { numberFilter, dateAgoFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
+import { numberFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
 import { Modal } from 'bootstrap';
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
@@ -78,6 +77,7 @@ const props = defineProps(['adminPostKey'])
 
 // 定義參數
 const thisModalRef = ref()
+const agree = ref(false)
 const post = computed(() => adminPosts[props['adminPostKey']])
 
 // 定義modal可被呼叫的方法，並Expose給父元素
@@ -107,15 +107,6 @@ defineExpose({ toggleAdminPostDialogModal })
         font-size: 18px;
     }
 
-    h4 {
-        font-size: 30px;
-    }
-
-    .info-text {
-        color: #000;
-        font-size: 18px;
-    }
-
     .btn-close-wrapper {
         margin-top: calc(-4rem - 9px);
         width: 90px;
@@ -135,10 +126,23 @@ defineExpose({ toggleAdminPostDialogModal })
         }
     }
 
-    .card-text {
-        color: var(--dark-gray-color);
-        font-size: 18px;
-        line-height: 40px;
+    .form-check {
+        .form-check-input {
+            border: 3px solid var(--light-green-color);
+            border-radius: 0;
+            margin-top: 0.125em;
+            width: 1.25em;
+            height: 1.25em;
+
+            &:checked {
+                background-color: var(--light-green-color);
+            }
+        }
+
+        .form-check-label {
+            font-size: 18px;
+            font-weight: 700;
+        }
     }
 }
 
