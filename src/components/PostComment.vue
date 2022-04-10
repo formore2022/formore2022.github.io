@@ -19,7 +19,7 @@
                         @{{ comment?.user }}
                     </div>
                     <div class="info-text">
-                        {{ comment?.date_ago ? dayAgoFilter(comment.date_ago) : '' }}
+                        {{ comment?.date_ago!=null ? dateAgoFilter(comment.date_ago) : '' }}
                     </div>
                 </div>
                 <!-- 留言區 -->
@@ -34,7 +34,7 @@
 
 <script setup>
 import { computed, inject } from 'vue';
-import { dayAgoFilter, parseContent } from '@/common-functions.js';
+import { dateAgoFilter, parseContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
 const props = defineProps(['comment'])

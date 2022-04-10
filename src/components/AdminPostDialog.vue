@@ -65,20 +65,16 @@ export default {
 </script>
 
 <script setup>
-import { ref, computed, inject, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { numberFilter, parseContent, adjustMultipleModalsLayer } from '@/common-functions.js';
 import { Modal } from 'bootstrap';
 
-// inject需要用的參數進行使用，需在parent或grand-parent進行provide
-const adminPosts = inject('adminPosts')
-
 // 讀入parent傳進來的參數
-const props = defineProps(['adminPostKey'])
+const props = defineProps(['post'])
 
 // 定義參數
 const thisModalRef = ref()
 const agree = ref(false)
-const post = computed(() => adminPosts[props['adminPostKey']])
 
 // 定義modal可被呼叫的方法，並Expose給父元素
 let thisModal;

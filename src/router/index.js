@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import HotView from '../views/HotView.vue'
 import NewView from '../views/NewView.vue'
 import AboutView from '../views/AboutView.vue'
+import MyPostView from '../views/MyPostView.vue'
+import MyDraftView from '../views/MyDraftView.vue'
 
 const routes = [
   {
@@ -27,6 +29,16 @@ const routes = [
     path: '/about',
     name: 'about',
     component: AboutView
+  },
+  {
+    path: '/myPost',
+    name: 'myPost',
+    component: MyPostView
+  },
+  {
+    path: '/myDraft',
+    name: 'myDraft',
+    component: MyDraftView
   }
 ]
 

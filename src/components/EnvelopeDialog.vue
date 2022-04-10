@@ -44,6 +44,7 @@ const envelopeAnswer = ref('')
 // 確認鈕按下時
 const confirm = () => {
     if (envelopeAnswer.value === 'FOMO') {
+        envelopeAnswer.value = '';
         setAdminPostKey('missing');
         toggleEnvelopeDialogModal();
         toggleAdminPostDialogModal();
@@ -86,6 +87,7 @@ defineExpose({ toggleEnvelopeDialogModal })
     }
 
     input {
+        font-size: 16px;
         height: 27px;
         padding: 10px 35px 10px 50px;
         border: none;
