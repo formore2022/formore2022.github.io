@@ -10,6 +10,7 @@ const numberFilter = (num) => Number(num).toLocaleString();
 // 將date ago轉為文字
 const dayAgoFilter = (dateAgo) => {
     const rtf = new Intl.RelativeTimeFormat('zh-TW', { style: 'narrow' });
+    if (dateAgo===0) return '今天';
     return rtf.format(-dateAgo, 'day').replace(' ', '');
 }
 
@@ -24,7 +25,7 @@ const dateAgoFilter = (dateAgo) => {
 const _replaceText = (content, showMoreStr) => {
     let str = content;
     str = str.replaceAll(/\n/gi, '<br>');
-    str = str.replaceAll(/([#@](?:[^\x00-\x7F]|\w)+)/gi, (match) => `<span class="hash-tag">${match}</span>`);
+    str = str.replaceAll(/([#@](?:[^\x00-\x7F]|\w)+)/gi, (match) => `<span class="hash-tag cursor-pointer">${match}</span>`);
     str = str.replaceAll(/!\[show_more\]/gi, showMoreStr);
     str = str.replaceAll(/!\[strong text='([^']*)'\]/gi, (_, match) => `<span class="text-light-green fw-bold">${match}</span>`);
     return str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, _replaceImageTagMapper);
@@ -84,24 +85,47 @@ const parseContent = (content) => {
     return _replaceText(content, '');
 };
 
+// 解析草稿
+const parseDraft = (content) => {
+    if (!content) return '';
+    content = content.replaceAll(/!\[show_more\]/gi, '');
+    content = content.replaceAll(/!\[strong text='([^']*)'\]/gi, '');
+    return content;
+};
+
 // 調整多個modal的層級
 const adjustMultipleModalsLayer = () => {
-    // 紀錄原modal的位置，並設定每一層modal的backdrop及主體的z-index
+    // 紀錄原modal的位置
     let nodeScrollTopMap = {};
-    document.querySelectorAll('.modal-backdrop').forEach((node, index) => {
-        node.style["z-index"] = 1050 + (index) * 10;
-    });
-    document.querySelectorAll('.modal').forEach((node, index) => {
-        nodeScrollTopMap[node.id] = node.scrollTop
+    document.querySelectorAll(`.modal`).forEach((node, index) => {
+        nodeScrollTopMap[node.id] = node.scrollTop;
         node.style["z-index"] = 1055 + (index) * 10;
-    })
+    });
 
-    // 將打開的modal滾到原來的位置
-    console.log(nodeScrollTopMap)
     setTimeout(() => {
+        // 設定每一層modal的backdrop及主體的z-index
+        document.querySelectorAll('.modal-backdrop.show').forEach((node, index) => {
+            node.style["z-index"] = 1050 + (index) * 10;
+        });
+        document.querySelectorAll(`.modal.show`).forEach((node, index) => {
+            node.style["z-index"] = 1055 + (index) * 10;
+        });
+        
+        // 將打開的modal滾到原來的位置
+        console.log(nodeScrollTopMap)
         for(let id in nodeScrollTopMap)
             document.getElementById(id).scrollTop = nodeScrollTopMap[id]
     }, 500)
 }
 
-export { getNavLinkClass, numberFilter, dateAgoFilter, dayAgoFilter, getFirstImageUrl, parsePreviewContent, parseContent, adjustMultipleModalsLayer };
+export {
+    getNavLinkClass,
+    numberFilter,
+    dateAgoFilter,
+    dayAgoFilter,
+    getFirstImageUrl,
+    parsePreviewContent,
+    parseContent,
+    parseDraft,
+    adjustMultipleModalsLayer
+};

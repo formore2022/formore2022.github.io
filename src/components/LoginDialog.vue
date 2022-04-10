@@ -37,7 +37,7 @@
                             class="btn bg-light-green text-white mt-4"
                             @click="login"
                         >登入</button>
-                        <div id="sign-up" class="text-light-green text-center my-2">還沒有帳號嗎？<u>馬上註冊</u>！</div>
+                        <div id="sign-up" class="text-light-green text-center my-2 cursor-pointer">還沒有帳號嗎？<u>馬上註冊</u>！</div>
                     </div>
                 </div>
             </div>
@@ -105,6 +105,7 @@ defineExpose({ toggleLoginDialogModal })
 }
 
 input {
+    font-size: 16px;
     padding: 10px 10px 10px 15px;
     border: none;
     border-radius: 10px;
@@ -123,7 +124,6 @@ input {
 
 #forget-password, #sign-up {
     font-size: 14px;
-    cursor: pointer;
 }
 
 .v-spacer {

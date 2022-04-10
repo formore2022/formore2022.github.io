@@ -11,6 +11,7 @@
             <!-- 主導覽列內容 -->
             <a class="navbar-brand p-0" href="/"><img src="@/assets/banner.png" height="65"/></a>
             <div class="row collapse navbar-collapse justify-content-between py-3 py-lg-0">
+                <!-- 搜尋區 -->
                 <div class="col text-start">
                     <label id="search-area">
                         <input
@@ -20,11 +21,63 @@
                         />
                     </label>
                 </div>
-                <div v-if="user.logged_in" class="col-auto">
+                <!-- 訊息 -->
+                <div v-if="user.logged_in" class="col-auto px-2">
+                    <svg width="28" height="25" viewBox="0 0 32 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M31.4991 10.3323C29.9429 5.51167 26.4977 2.45883 21.6719 0.962869C15.2945 -1.01293 9.40728 0.016564 4.32643 4.37967C1.95341 6.38084 0.446996 9.18158 0.109955 12.219C0.0844229 12.3534 0.0476488 12.4856 0 12.6142V14.6939C0.377207 16.0146 0.586429 17.414 1.17591 18.6381C1.79746 19.9306 2.79317 21.0507 3.59798 22.2644C3.75069 22.5036 3.92479 22.8586 3.8637 23.1008C3.46817 24.7349 3.00392 26.3408 2.58089 27.9615C2.50454 28.2586 2.39 28.6538 2.52591 28.8529C2.63892 29.0148 3.10776 29.0207 3.39945 28.9762C5.99549 28.5924 8.52967 27.8838 10.939 26.8682C11.2438 26.7657 11.5725 26.7507 11.8858 26.8251C17.7929 27.9868 23.1333 26.9083 27.6766 22.9314C30.0575 20.8516 31.5083 18.2251 31.887 15.0891C31.9143 14.9553 31.9521 14.8237 32 14.6954V12.6156C31.8351 11.8565 31.7373 11.0736 31.4991 10.3323ZM7.4235 15.7695C7.14594 15.7713 6.87074 15.7198 6.61362 15.6181C6.3565 15.5164 6.12249 15.3664 5.92495 15.1768C5.72741 14.9871 5.5702 14.7614 5.46232 14.5126C5.35443 14.2639 5.29798 13.9968 5.29618 13.7268C5.29437 13.4568 5.34725 13.1891 5.4518 12.939C5.55635 12.6889 5.71052 12.4613 5.90551 12.2691C6.1005 12.0769 6.33249 11.924 6.58823 11.8191C6.84397 11.7141 7.11845 11.6592 7.39601 11.6575C7.67357 11.6557 7.94877 11.7071 8.20589 11.8088C8.46301 11.9105 8.69703 12.0605 8.89457 12.2502C9.09211 12.4399 9.24931 12.6655 9.35719 12.9143C9.46508 13.1631 9.52153 13.4301 9.52334 13.7001C9.52514 13.9701 9.47226 14.2378 9.36771 14.4879C9.26316 14.738 9.10899 14.9657 8.914 15.1578C8.71901 15.35 8.48703 15.5029 8.23129 15.6079C7.97555 15.7128 7.70106 15.7677 7.4235 15.7695ZM16.0183 15.7695C15.6006 15.773 15.1911 15.656 14.8417 15.4333C14.4923 15.2105 14.2186 14.8921 14.0551 14.5181C13.8916 14.1441 13.8457 13.7314 13.9233 13.3321C14.0008 12.9327 14.1982 12.5647 14.4906 12.2745C14.783 11.9842 15.1573 11.7848 15.5661 11.7013C15.975 11.6179 16.4001 11.6542 16.7877 11.8056C17.1754 11.957 17.5083 12.2168 17.7442 12.5522C17.9802 12.8875 18.1087 13.2834 18.1136 13.6897C18.1251 13.9624 18.0791 14.2346 17.9783 14.4893C17.8776 14.7441 17.7243 14.976 17.5278 15.1709C17.3313 15.3658 17.0959 15.5194 16.836 15.6224C16.5761 15.7253 16.2973 15.7754 16.0168 15.7695H16.0183ZM24.5704 15.7695C24.0098 15.7648 23.4742 15.5436 23.0812 15.1547C22.6883 14.7658 22.4703 14.2409 22.4751 13.6956C22.48 13.1504 22.7073 12.6293 23.1071 12.247C23.507 11.8648 24.0465 11.6527 24.607 11.6575C25.1676 11.6622 25.7033 11.8833 26.0962 12.2723C26.4891 12.6612 26.7072 13.186 26.7023 13.7313C26.6974 14.2766 26.4701 14.7977 26.0703 15.1799C25.6705 15.5621 25.1309 15.7742 24.5704 15.7695Z" fill="#94DBD7"/>
+                    </svg>
+                </div>
+                <!-- 通知 -->
+                <div v-if="user.logged_in" class="col-auto px-2 position-relative">
+                    <div class="dropdown">
+                        <svg 
+                            width="21" 
+                            height="25" 
+                            class="cursor-pointer dropdown-toggle" 
+                            @click="user.notifications.main = false"
+                            data-bs-toggle="dropdown" 
+                            viewBox="0 0 27 32" 
+                            fill="none" 
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M26.206 22.9089C25.4555 22.3087 24.7363 21.6649 23.9944 21.053C23.8149 20.9167 23.6664 20.7426 23.559 20.5424C23.4515 20.3422 23.3877 20.1207 23.3718 19.8931C23.116 16.5553 23.8437 13.1828 22.9852 9.85954C22.8601 9.36946 22.8545 8.80689 22.6612 8.31971C22.1444 6.93507 21.3283 5.68705 20.2736 4.6684C19.219 3.64975 17.9528 2.88668 16.5692 2.43589C16.3958 2.37499 16.1883 2.31989 16.0007 2.2416C15.9142 1.62246 15.6126 1.05558 15.1509 0.644173C14.6892 0.232762 14.098 0.00416738 13.4849 0C12.8733 0.00136479 12.2825 0.226161 11.8194 0.633655C11.3563 1.04115 11.0517 1.60438 10.9606 2.2213C10.8389 2.28527 10.7113 2.33675 10.5797 2.37499C6.59988 3.58133 3.44733 7.49615 3.6321 12.6347C3.71454 14.9227 3.6321 17.2165 3.64632 19.5045C3.66491 19.8295 3.60025 20.1539 3.4587 20.4458C3.31715 20.7376 3.10358 20.9869 2.83899 21.169C2.19085 21.6388 1.58251 22.1666 0.954275 22.6653C0.625181 22.9046 0.364533 23.229 0.199152 23.6051C0.0337713 23.9813 -0.0303674 24.3956 0.0133413 24.8054C0.129892 26.0118 1.0822 27.0267 2.66274 27.0209C9.75245 26.9977 16.8393 27.0209 23.929 27.0209C24.345 27.0411 24.7619 27.0119 25.1713 26.9339C25.593 26.852 25.982 26.6461 26.2906 26.3416C26.5992 26.0372 26.8138 25.6473 26.9082 25.2201C27.1299 24.3299 26.9735 23.5121 26.206 22.9089Z" fill="#94DBD7"/>
+                            <path d="M13.4847 32C14.5402 32 15.5524 31.5723 16.2988 30.8109C17.0452 30.0495 17.4645 29.0169 17.4645 27.9402H9.50488C9.50488 29.0169 9.92418 30.0495 10.6705 30.8109C11.4169 31.5723 12.4292 32 13.4847 32Z" fill="#94DBD7"/>
+                        </svg>
+                        <ul class="dropdown-menu dropdown-menu-center arrow-up">
+                            <li v-for="(notify, index) in notifications" :key="index">
+                                <router-link class="dropdown-item py-3" :to="notify.to ?? '#'">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        :width="notify.icon.width"
+                                        :height="notify.icon.height"
+                                        :viewBox="notify.icon.viewBox"
+                                        :fill="notify.icon.fill"
+                                    >
+                                        <path v-for="(path, index) in notify.icon.paths" :key="index"
+                                            :d="path.d"
+                                            :fill="path.fill"
+                                            :stroke="path.stroke"
+                                            :stroke-width="path.strokeWidth"
+                                            :stroke-linecap="path.strokeLinecap"
+                                            :stroke-linejoin="path.strokeLinejoin"
+                                        />
+                                    </svg>
+                                    {{ notify.content }}
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                    <span v-if="user.notifications.main" class="notify-badge position-absolute translate-middle rounded-circle">
+                        <span class="visually-hidden">New alerts</span>
+                    </span>
+                </div>
+                <!-- 大頭貼 -->
+                <div v-if="user.logged_in" class="col-auto px-2">
                     <div id="user-avatar" class="rounded-circle d-flex justify-content-center align-items-center">
                         <img src="@/assets/user_avatar.png" class="img-fluid rounded-circle" />
                     </div>
                 </div>
+                <!-- 登出/登入 -->
                 <div v-if="user.logged_in" class="col-auto">
                     <button
                         id="login-btn"
@@ -118,7 +171,11 @@
 
                 <ul v-if="user.logged_in" class="nav flex-column align-items-start">
                     <li v-for="route in personalRoutes" :key="route.name" class="nav-item">
-                        <a :class="navLinkClass(route.name)" href="javascript:void(0)" class="position-relative">
+                        <router-link
+                            :class="navLinkClass(route.name)"
+                            :to="route.path"
+                            class="position-relative"
+                        >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 :width="route.icon.width"
@@ -136,18 +193,18 @@
                                 />
                             </svg>
                             <span class="ms-2">{{ route.text }}</span>
+                            <span v-if="route.name==='myPost' || route.name==='myDraft'">({{ unread(route.name) }})</span>
                             <span
-                                v-if="route.name==='myPost' || route.name==='myDraft'"
+                                v-if="user.notifications[route.name]"
                                 class="notify-badge 
                                 position-absolute 
                                 translate-middle 
                                 p-1 
-                                bg-danger 
                                 border 
                                 border-light 
                                 rounded-circle"
                             ><span class="visually-hidden">New alerts</span></span>
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -158,27 +215,44 @@
             </div>
         </div>
     </div>
+
+    <!-- DIALOG 區 -->
     <LoginDialog ref="loginDialogRef" />
+    <PostDialog ref="postDialogRef" :post="currentPost" />
+    <DraftDialog ref="draftDialogRef" :post="currentPost" />
+    <AdminPostDialog ref="adminPostDialogRef" :post="currentAdminPost" />
+    <EnvelopeDialog ref="envelopeDialogRef" />
 </template>
 
 <script>
 // 引入component進行使用
 import LoginDialog from '@/components/LoginDialog.vue';
+import PostDialog from '@/components/PostDialog.vue';
+import DraftDialog from '@/components/DraftDialog.vue';
+import EnvelopeDialog from '@/components/EnvelopeDialog.vue';
+import AdminPostDialog from '@/components/AdminPostDialog.vue';
 
 export default {
     components: {
         LoginDialog,
+        PostDialog,
+        DraftDialog,
+        EnvelopeDialog,
+        AdminPostDialog,
     }
 };
 </script>
 
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, reactive, computed, inject, provide } from 'vue';
 import { getNavLinkClass } from '@/common-functions.js';
 
-// 讀入user.json
+// 讀入user.json、posts.json、admin_post.json及notifications.json
 import userJson from '@/assets/user.json';
+import postsJson from '@/assets/posts.json';
+import adminPostsJson from '@/assets/admin_posts.json';
+import notificationsJson from '@/assets/notifications.json';
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
 //（APP的上層就是AppCreate時use的那些plugin們）
@@ -297,7 +371,7 @@ const secondRoutes = ref([
 const personalRoutes = ref([
     {
         name: 'myPost',
-        path: '#',
+        path: '/myPost',
         text: '我的貼文',
         icon: {
             width: 23,
@@ -334,7 +408,7 @@ const personalRoutes = ref([
     },
     {
         name: 'myDraft',
-        path: '#',
+        path: '/myDraft',
         text: '我的草稿',
         icon: {
             width: 23,
@@ -443,8 +517,9 @@ const personalRoutes = ref([
 ])
 
 // 處理Route Link的Active Class判別
-const route = useRoute();
-const currentMatchesNames = computed(() => route.matched.map((s) => s.name));
+const route = useRoute()
+const router = useRouter()
+const currentMatchesNames = computed(() => route.matched.map((s) => s.name))
 const navLinkClass = (name) => ({
     ...getNavLinkClass(currentMatchesNames, name),
     ...{
@@ -455,19 +530,67 @@ const navLinkClass = (name) => ({
 
 // Dialog Ref
 const loginDialogRef = ref()
+const postDialogRef = ref()
+const draftDialogRef = ref()
+const envelopeDialogRef = ref()
+const adminPostDialogRef = ref()
 
 // user
 const user = reactive(userJson)
+const unread = (type) => {
+    if (type==='myPost') {
+        return [...posts].filter(post => post.user === user.userid && !post.is_draft).length
+    } else {
+        return [...posts].filter(post => post.user === user.userid && post.is_draft).length
+    }
+}
+
+// Post
+const posts = reactive(postsJson)                                           // 文章objects
+const currentPost = ref({})                                                 // 目前點選的文章object reference
+const setCurrentPost = (post) => currentPost.value = post                   // setter
+
+const hotPosts = computed(() => [...posts].filter(post => !post.is_draft))  // 非草稿的文章objects
+const myPosts = computed(() =>                                              // 自己非草稿的文章objects
+    [...posts].filter(post => post.user === user.userid && !post.is_draft)
+)
+const myDrafts = computed(() =>                                             // 自己草稿的文章objects
+    [...posts].filter(post => post.user === user.userid && post.is_draft)
+)
+
+const adminPosts = reactive(adminPostsJson)                             // 管理員文章objects
+const adminPostKey = ref()                                              // 管理員文章key
+const setAdminPostKey = (key) => adminPostKey.value = key               // setter
+const currentAdminPost = computed(() => adminPosts[adminPostKey.value]) // 目前的管理員文章object reference
+
+// Notifications
+const notifications = reactive(notificationsJson)
 
 // 重繪貼文masonry方法，SetTimeout是因為要先等CSS的動畫跑完
 const reDrawPosts = () => setTimeout(() => redrawVueMasonry('containerId'), 500)
 
 // provide參數給child component使用（vue3才有，避免children太多需層層傳遞）
+provide('reDrawPosts', reDrawPosts)
+// dialog
+provide('togglePostDialogModal', ()=> postDialogRef.value.togglePostDialogModal())
+provide('toggleDraftDialogModal', ()=> draftDialogRef.value.toggleDraftDialogModal())
+provide('toggleEnvelopeDialogModal', ()=> envelopeDialogRef.value.toggleEnvelopeDialogModal())
+provide('toggleAdminPostDialogModal', ()=> adminPostDialogRef.value.toggleAdminPostDialogModal())
+// user
 provide('user', user)
-const toggleLoginDialogModal = ()=> loginDialogRef.value.toggleLoginDialogModal()
+const toggleLoginDialogModal = () => loginDialogRef.value.toggleLoginDialogModal()
 provide('toggleLoginDialogModal', toggleLoginDialogModal)
-const toggleLoginStatus = ()=> user.logged_in = !user.logged_in
+const toggleLoginStatus = () => {
+    user.logged_in = !user.logged_in;
+    if (!user.logged_in) router.push({ path: '/' });
+}
 provide('toggleLoginStatus', toggleLoginStatus)
+// post
+provide('setCurrentPost', setCurrentPost)
+provide('setAdminPostKey', setAdminPostKey)
+provide('hotPosts', hotPosts)
+provide('myPosts', myPosts)
+provide('myDrafts', myDrafts)
 </script>
 
 <style lang="scss">
@@ -534,7 +657,6 @@ provide('toggleLoginStatus', toggleLoginStatus)
 }
 
 .hash-tag {
-    cursor: pointer;
     color: var(--light-green-color) !important;
 }
 
@@ -568,6 +690,7 @@ provide('toggleLoginStatus', toggleLoginStatus)
     }
 
     input {
+        font-size: 14px;
         height: 27px;
         padding: 10px 35px;
         border: none;
@@ -585,13 +708,73 @@ provide('toggleLoginStatus', toggleLoginStatus)
     padding: 4px 12px;
 }
 
-#user-avatar {
-    width: 47px;
-    height: 47px;
-    color: #fff;
-    background: #83F3F3 !important;
-    font-size: 18px;
-    border: 3px solid#83F3F3;
+.navbar {
+    #user-avatar {
+        width: 42px;
+        height: 42px;
+        color: #fff;
+        background: #83F3F3 !important;
+        font-size: 18px;
+        border: 3px solid#83F3F3;
+    }
+
+    .notify-badge {
+        background-color: #FF4D00;
+        top: 4px;
+        left: 11px;
+        padding: 4px;
+    }
+
+    .dropdown-menu-center {
+        left: 50% !important;
+        right: auto !important;
+        transform: translate(-50%, 20px) !important;
+    }
+    .arrow-up {
+        border-color: #94DBD7;
+        background-color: #94DBD7;
+        border-radius: 25px;
+        padding-top: 22px;
+        padding-bottom: 22px;
+
+        &::before, &::after {
+            content: '';
+            position: absolute;
+            display: inline-block;
+        }
+
+        &::before {
+            top: -13px;
+            left: 50%;
+            transform: translate(-50%, 0) !important;
+            border-left: 13px solid transparent;
+            border-right: 13px solid transparent;
+            border-bottom: 13px solid #94DBD7;
+        }
+
+        &::after {
+            top: -12px;
+            left: 50%;
+            transform: translate(-50%, 0) !important;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 12px solid #94DBD7;
+        }
+
+        .dropdown-item {
+            background-color: #FFF;
+            color: #000;
+        }
+
+        li::after {
+            content: '';
+            width: calc(100% - 60px);
+            margin: 0 30px;
+            position: absolute;
+            display: block;
+            border-bottom: 1px solid #DDDDDD;
+        }
+    }
 }
 
 #sidebar {
@@ -620,12 +803,13 @@ provide('toggleLoginStatus', toggleLoginStatus)
             color: var(--dark-black-color);
         }
 
-        &.router-link-exact-active, &.active {
+        &.active {
             color: var(--light-green-color);
         }
     }
 
     .notify-badge {
+        background-color: #FF4D00;
         top: 15px;
         left: 18px;
     }

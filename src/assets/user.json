@@ -3,5 +3,10 @@
     "password": "formore",
     "logged_in": false,
     "userid": "GReeeeNGirl",
-    "username": "焦焦"
+    "username": "焦焦",
+    "notifications": {
+        "main": true,
+        "myPost": true,
+        "myDraft": true
+    }
 }

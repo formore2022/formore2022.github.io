@@ -3,7 +3,7 @@
         <!-- MODAL點擊觸發區 -->
         <div
             class="cursor-pointer"
-            @click="clickPost(post)"
+            @click="clickPost"
         >
             <!-- HEADER區 -->
             <div class="card-header border-0 bg-transparent px-2 pt-3 pb-2">
@@ -58,16 +58,13 @@
                         width="23"
                         height="20"
                         viewBox="0 0 26 23"
-                        :fill="post.liked ? 'red' : 'none'"
-                        @click="
-                            post.liked = !(post.liked || false);
-                            post.liked ? post.likes++ : post.likes--;
-                        "
+                        :fill="user.logged_in && post?.liked ? 'red' : 'none'"
+                        @click="clickLike"
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
                             d="M1.23437 8.50347C0.440508 4.789 1.56252 1.69007 6.15635 1.07453C10.7502 0.45899 12.6396 3.81588 12.5602 5.27514C12.5602 3.55057 15.8362 0.522666 19.5197 1.07453C24.1242 1.76436 24.6677 6.24825 23.6743 9.06064C22.6809 11.873 16.3795 17.9577 12.5602 21C8.78491 18.108 2.02824 12.2179 1.23437 8.50347Z"
-                            :stroke="post.liked ? 'red' : 'black'"
+                            :stroke="user.logged_in && post?.liked ? 'red' : 'black'"
                             stroke-width="2"
                         />
                     </svg>
@@ -120,19 +117,28 @@ import { ref, computed, inject } from 'vue';
 import { numberFilter, dateAgoFilter, getFirstImageUrl, parsePreviewContent } from '@/common-functions.js';
 
 // 讀入parent傳進來的參數
-const props = defineProps(['post'])
+const props = defineProps(['post', 'type'])
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
+const user = inject('user')
 const setCurrentPost = inject('setCurrentPost')
 const togglePostDialogModal = inject('togglePostDialogModal')
+const toggleDraftDialogModal = inject('toggleDraftDialogModal')
 
 // 定義參數
 const coverimg = computed(() => getFirstImageUrl(props.post?.content))
 
 // 定義方法
-const clickPost = (post) => {
-    setCurrentPost(post);
-    togglePostDialogModal();
+const clickPost = () => {
+    setCurrentPost(props.post);
+    if (props.type==='post') togglePostDialogModal();
+    else toggleDraftDialogModal();
+}
+const clickLike = () => {
+    if (user.logged_in) {
+        props.post.liked = !(props.post.liked || false);
+        props.post.liked ? props.post.likes++ : props.post.likes--;
+    }
 }
 </script>
 
