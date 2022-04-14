@@ -282,14 +282,14 @@
                 <!-- 登入登出 -->
                 
                 <!-- 登出/登入 -->
-                <div v-if="user.logged_in" class="mt-4 col-auto">
+                <div v-if="user.logged_in" class="d-block d-sm-none mt-4 col-auto">
                     <button
                         id="login-btn"
                         class="btn bg-light-green text-white"
                         @click="toggleLoginStatus"
                     >登出</button>
                 </div>
-                <div v-if="!user.logged_in" class="mt-4 col-auto">
+                <div v-if="!user.logged_in" class="d-block d-sm-none mt-4 col-auto">
                     <button
                         id="login-btn"
                         class="btn bg-light-green text-white"
