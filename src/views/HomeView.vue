@@ -18,7 +18,7 @@ import { getNavLinkClass } from '@/common-functions.js';
 const subRoutes = ref([
     {
         name: 'new',
-        path: '/new',
+        path: '/hot',
         text: '最新',
     },
     {

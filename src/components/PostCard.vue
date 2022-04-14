@@ -48,7 +48,7 @@
         </div>
         
         <!-- FOOTER區 -->
-        <div class="card-footer border-0 bg-transparent px-2 py-3">
+        <div v-if="type==='post'" class="card-footer border-0 bg-transparent px-2 py-3">
             <!-- 若有封面圖片，不顯示footer的hr -->
             <hr v-show="!coverimg" class="opacity-75" />
             <!-- 按鈕區 -->
@@ -122,8 +122,7 @@ const props = defineProps(['post', 'type'])
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
 const user = inject('user')
 const setCurrentPost = inject('setCurrentPost')
-const togglePostDialogModal = inject('togglePostDialogModal')
-const toggleDraftDialogModal = inject('toggleDraftDialogModal')
+const dialogFunc = inject('dialogFunc')
 
 // 定義參數
 const coverimg = computed(() => getFirstImageUrl(props.post?.content))
@@ -131,8 +130,8 @@ const coverimg = computed(() => getFirstImageUrl(props.post?.content))
 // 定義方法
 const clickPost = () => {
     setCurrentPost(props.post);
-    if (props.type==='post') togglePostDialogModal();
-    else toggleDraftDialogModal();
+    if (props.type==='post') dialogFunc.togglePostDialogModal();
+    else dialogFunc.toggleDraftDialogModal();
 }
 const clickLike = () => {
     if (user.logged_in) {

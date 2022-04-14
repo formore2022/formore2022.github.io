@@ -7,7 +7,7 @@
         <span class="info-text">@{{ user ?? '' }}</span>
     </div>
     <div class="info-text">
-        {{ date_ago ? dateAgoFilter(date_ago) : '' }}
+        {{ date_ago!=null ? dateAgoFilter(date_ago) : '' }}
     </div>
 </template>
 

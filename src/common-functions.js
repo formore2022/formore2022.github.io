@@ -10,6 +10,7 @@ const numberFilter = (num) => Number(num).toLocaleString();
 // 將date ago轉為文字
 const dayAgoFilter = (dateAgo) => {
     const rtf = new Intl.RelativeTimeFormat('zh-TW', { style: 'narrow' });
+    console.log(dateAgo)
     if (dateAgo===0) return '今天';
     return rtf.format(-dateAgo, 'day').replace(' ', '');
 }
@@ -37,6 +38,8 @@ const _replaceImageTagMapper = (match) => {
     const imagePath = imgSrcMatches ? imgSrcMatches[1] : '';
     const imgWidthMatches = match.match(/width='([^']*)'/i)
     const width = imgWidthMatches ? imgWidthMatches[1] : '';
+    const imgAlignMatches = match.match(/align='([^']*)'/i)
+    const align = imgAlignMatches ? imgAlignMatches[1] : '';
     let image = '';
     if (imagePath !== '') {
         try {
@@ -45,7 +48,9 @@ const _replaceImageTagMapper = (match) => {
             image = imagePath;
         }
     }
-    return `<img src="${image}" width="${width}" class="img-fluid" />`;
+    const imgTag = `<img src="${image}" width="${width}" class="img-fluid" />`;
+    if (align !== '') return `<div style="text-align: ${align}">${imgTag}</div>`;
+    return imgTag;
 }
 
 // 解析第一張圖片
