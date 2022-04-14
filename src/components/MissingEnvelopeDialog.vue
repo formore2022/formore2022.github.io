@@ -1,5 +1,5 @@
 <template>
-    <div ref="thisModalRef" class="modal fade" id="envelopeDialogModal" tabindex="-1">
+    <div ref="thisModalRef" class="modal fade" id="missingEnvelopeDialogModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0">
                 <div class="modal-body p-0 align-items-center justify-content-center text-center">
@@ -8,9 +8,10 @@
                         <div class="text-light-green pb-1">題目：_ _r _ _re</div>
                         <label id="input-area">
                             <input
-                                class="form-control me-2 text-center"
+                                :class="`form-control me-2 text-center ${errorClass}`"
                                 type="search"
                                 placeholder="請輸入空格中的4個文字"
+                                @input="errorClass=''"
                                 v-model="envelopeAnswer"
                             />
                         </label>
@@ -34,31 +35,35 @@ import { Modal } from 'bootstrap';
 import { adjustMultipleModalsLayer } from '@/common-functions.js';
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
-const toggleAdminPostDialogModal = inject('toggleAdminPostDialogModal')
+const dialogFunc = inject('dialogFunc')
 const setAdminPostKey = inject('setAdminPostKey')
 
 // 定義參數
 const thisModalRef = ref()
 const envelopeAnswer = ref('')
+const errorClass = ref('')
 
 // 確認鈕按下時
 const confirm = () => {
-    if (envelopeAnswer.value === 'FOMO') {
+    errorClass.value = '';
+    if (envelopeAnswer.value.toLowerCase() === 'fomo') {
         envelopeAnswer.value = '';
         setAdminPostKey('missing');
-        toggleEnvelopeDialogModal();
-        toggleAdminPostDialogModal();
+        toggleMissingEnvelopeDialogModal();
+        dialogFunc.toggleAdminPostDialogModal();
+    } else {
+        errorClass.value = 'error';
     }
 }
 
 // 定義modal可被呼叫的方法，並Expose給父元素
 let thisModal;
 onMounted(() => { thisModal = new Modal(thisModalRef.value, {}) })
-const toggleEnvelopeDialogModal = () => {
+const toggleMissingEnvelopeDialogModal = () => {
     thisModal.toggle();
     adjustMultipleModalsLayer();
 }
-defineExpose({ toggleEnvelopeDialogModal })
+defineExpose({ toggleMissingEnvelopeDialogModal })
 </script>
 
 <style scoped lang="scss">
@@ -98,7 +103,19 @@ defineExpose({ toggleEnvelopeDialogModal })
             font-size: 16px;
             color: var(--gray-color) !important;
         }
+
+        &.error {
+            animation: shake 0.2s ease-in-out 0s 2;
+            box-shadow: 0 0 0.5em red;
+        }
     }
+}
+
+@keyframes shake {
+  0% { margin-left: 0rem; }
+  25% { margin-left: 0.5rem; }
+  75% { margin-left: -0.5rem; }
+  100% { margin-left: 0rem; }
 }
 
 #confirm-btn {

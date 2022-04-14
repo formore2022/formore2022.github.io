@@ -3,7 +3,7 @@
         <div class="modal-dialog modal-lg">
             <div v-if="post!=null" class="modal-content border-0 px-4 bg-light2">
                 <div class="modal-header border-0 d-block">
-                    <div class="row align-items-center px-4 mt-5">
+                    <div class="row flex-nowrap align-items-center p-0 px-sm-4 mt-5">
                         <!-- Avatar欄 -->
                         <div class="col-auto">
                             <div class="avatar rounded-circle d-flex justify-content-center align-items-center">
@@ -13,6 +13,15 @@
                         <!-- 系名．ID欄．日期欄 -->
                         <div class="col text-start">
                             <PostHeaderInfo :department="post?.department" :user="post?.user" :date_ago="post?.date_ago" />
+                        </div>
+                        <!-- 關閉鈕 -->
+                        <div class="col-auto btn-close-wrapper">
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
                         </div>
                     </div>
                 </div>
@@ -82,6 +91,7 @@ import { Modal } from 'bootstrap';
 // 讀入parent傳進來的參數
 const props = defineProps(['post'])
 const user = inject('user')
+const addNotification = inject('addNotification')
 
 // 定義參數
 const thisModalRef = ref()
@@ -104,7 +114,35 @@ const send = () => {
 
 // 定義modal可被呼叫的方法，並Expose給父元素
 let thisModal;
-onMounted(() => { thisModal = new Modal(thisModalRef.value, {}) })
+onMounted(() => { 
+    thisModal = new Modal(thisModalRef.value, {}) 
+    thisModalRef.value.addEventListener('hidden.bs.modal', () => {
+        if (!user?.adminEnvelopeIsOpened) {
+            user.notifications.main = true;
+            user.adminEnvelopeIsOpened = true;
+            addNotification({
+                "content": "你有新訊息！",
+                "click": "toggleAdminEnvelopeDialogModal",
+                "icon": {
+                    "width": 21,
+                    "height": 20,
+                    "viewBox": "0 0 512 512",
+                    "fill": "none",
+                    "paths": [
+                        {
+                            "d": "M464 64C490.5 64 512 85.49 512 112C512 127.1 504.9 141.3 492.8 150.4L275.2 313.6C263.8 322.1 248.2 322.1 236.8 313.6L19.2 150.4C7.113 141.3 0 127.1 0 112C0 85.49 21.49 64 48 64H464zM217.6 339.2C240.4 356.3 271.6 356.3 294.4 339.2L512 176V384C512 419.3 483.3 448 448 448H64C28.65 448 0 419.3 0 384V176L217.6 339.2z",
+                            "fill": "#303030",
+                            "stroke": null,
+                            "strokeWidth": null,
+                            "strokeLinecap": null,
+                            "strokeLinejoin": null
+                        }
+                    ]
+                }
+            })
+        }
+    })
+})
 const toggleDraftDialogModal = () => {
     thisModal.toggle();
     adjustMultipleModalsLayer();
@@ -130,6 +168,29 @@ defineExpose({ toggleDraftDialogModal })
         color: #fff;
         background: var(--light-green-color) !important;
         font-size: 18px;
+    }
+
+    .btn-close-wrapper {
+        margin-top: calc(-3rem);
+        width: 90px;
+        height: 115px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: end;
+        padding-right: 0;
+        z-index: 999;
+
+        @media (max-width: 480px) {
+            width: auto !important;
+        }
+
+        .btn-close {
+            color: var(--dark-gray-color) !important;
+            opacity: 1;
+            background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%237A7A7A'%3E%3Cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3E%3C/svg%3E") center/1em auto no-repeat;
+            margin-top: 1rem;
+        }
     }
 }
 

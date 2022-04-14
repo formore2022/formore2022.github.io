@@ -5,7 +5,7 @@
             class="cursor-pointer"
             @click="commentOnClick"
         >
-            <div class="row flex-nowrap align-items-center">
+            <div class="row flex-wrap flex-sm-nowrap align-items-center">
                 <!-- Avatar欄 -->
                 <div class="col-auto">
                     <div :class="`avatar rounded-circle d-flex justify-content-center align-items-center ${bgGreen}`">
@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <!-- 系名．ID欄．日期欄 -->
-                <div class="col-auto px-0 text-start info-area">
+                <div class="col col-sm-auto px-0 text-start info-area">
                     <div class="info-text text-truncate">
                         @{{ comment?.user }}
                     </div>
@@ -24,7 +24,7 @@
                 </div>
                 <!-- 留言區 -->
                 <div 
-                    class="col ps-0 text-break text-start" 
+                    class="col-12 col-sm ps-3 ps-sm-0 mt-2 mt-sm-0 text-break text-start" 
                     v-html="parseContent(comment?.content)"
                 ></div>
             </div>
@@ -40,7 +40,7 @@ import { dateAgoFilter, parseContent } from '@/common-functions.js';
 const props = defineProps(['comment'])
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
-const toggleEnvelopeDialogModal = inject('toggleEnvelopeDialogModal')
+const dialogFunc = inject('dialogFunc')
 
 // 定義參數
 const bgGreen = computed(() => {
@@ -50,7 +50,7 @@ const bgGreen = computed(() => {
 // 按下comment時
 const commentOnClick = () => {
     if (props.comment?.is_formore)
-        toggleEnvelopeDialogModal();
+        dialogFunc.toggleMissingEnvelopeDialogModal();
 }
 </script>
 
@@ -64,6 +64,10 @@ const commentOnClick = () => {
 
 .info-area {
     width: 130px;
+
+    @media (max-width: 480px) {
+        width: 100%;
+    }
 
     .info-text {
         color: #000;
