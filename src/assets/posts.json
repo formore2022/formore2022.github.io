@@ -134,7 +134,7 @@
         "user": "TESTTTTT",
         "date_ago": 15,
         "title": "這是一篇測試文章",
-        "content": "第一行\n第二行\n\n前面空兩行![show_more]這裡開始要顯示更多才看得到，下面插一張圖片![img src='test_new_post_img.png' width='443']",
+        "content": "第一行\n第二行\n\n前面空兩行![show_more]這裡開始要顯示更多才看得到，下面插一張圖片![img src='test_new_post_img.jpeg' width='443']",
         "likes": 1543,
         "liked": false,
         "comments": 890,
