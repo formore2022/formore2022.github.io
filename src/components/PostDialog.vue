@@ -101,14 +101,15 @@
                     
                     <!-- 按鈕區 -->
                     <div class="row align-items-center mt-5">
-                        <div class="col ps-0">
+                        <div class="col ps-0 pe-0 pe-sm-3">
                             <input class="form-control" placeholder="留言..." />
                         </div>
                         <div class="col-auto pe-0">
                             <button
                                 id="send-btn"
                                 class="btn bg-light-green text-white"
-                            >送出</button>
+                                @click="clickSend"
+                            >{{ user.logged_in ? '送出' : '登入' }}</button>
                         </div>
                     </div>
                 </div>
@@ -142,6 +143,7 @@ const props = defineProps(['post'])
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
 const user = inject('user')
+const dialogFunc = inject('dialogFunc')
 
 // 定義參數
 const thisModalRef = ref()
@@ -152,6 +154,11 @@ const clickLike = () => {
         props.post.liked = !(props.post.liked || false);
         props.post.liked ? props.post.likes++ : props.post.likes--;
     }
+}
+
+const clickSend = () => {
+    if (!user.logged_in) 
+        dialogFunc.toggleLoginDialogModal();
 }
 
 // 定義modal可被呼叫的方法，並Expose給父元素
@@ -230,5 +237,9 @@ defineExpose({ togglePostDialogModal })
     font-size: 17px;
     border-radius: 10px;
     padding: 8px 20px;
+    
+    @media (max-width: 480px) {
+        padding: 8px 15px;
+    }
 }
 </style>
