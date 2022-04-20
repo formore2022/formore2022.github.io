@@ -15,7 +15,7 @@
                 </div>
                 <hr class="mt-4 mb-0" />
                 <div class="modal-body p-0 align-items-center justify-content-center text-center">
-                    <div class="px-5 mx-5 pb-4">
+                    <div class="px-3 px-md-5 mx-3 mx-md-5 pb-4">
                         <div id="error-msg" class="text-danger text-center my-2">
                             {{ errorMsg }}
                         </div>
@@ -37,7 +37,6 @@
                             class="btn bg-light-green text-white mt-4"
                             @click="login"
                         >登入</button>
-                        <div id="sign-up" class="text-light-green text-center my-2 cursor-pointer">還沒有帳號嗎？<u>馬上註冊</u>！</div>
                     </div>
                 </div>
             </div>
@@ -62,7 +61,8 @@ const errorMsg = ref('')
 
 // 確認鈕按下時
 const login = () => {
-    if (account.value === user.account && password.value === user.password) {
+    if (account.value.toLowerCase() === user.account.toLowerCase() 
+        && password.value.toLowerCase() === user.password.toLowerCase()) {
         errorMsg.value = '';
         account.value = '';
         password.value = '';
@@ -122,7 +122,7 @@ input {
     height: 21px;
 }
 
-#forget-password, #sign-up {
+#forget-password {
     font-size: 14px;
 }
 

@@ -92,6 +92,7 @@ import { Modal } from 'bootstrap';
 const props = defineProps(['post'])
 const user = inject('user')
 const addNotification = inject('addNotification')
+const dialogFunc = inject('dialogFunc')
 
 // 定義參數
 const thisModalRef = ref()
@@ -140,6 +141,7 @@ onMounted(() => {
                     ]
                 }
             })
+            dialogFunc.showNewNotifyToast();
         }
     })
 })

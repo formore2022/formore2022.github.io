@@ -1,6 +1,6 @@
 <template>
     <!-- 上方導航列 -->
-    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-light-green py-0">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-light-green py-0 vw-100">
         <div class="container-fluid">
             <!-- 小於LG時的漢堡鈕 -->
             <label for="sidebar-toggle" type="button" id="sidebarCollapse" class="navbar-toggler" @click="reDrawPosts">
@@ -10,7 +10,7 @@
 
             <!-- 主導覽列內容 -->
             <a class="navbar-brand p-0" href="/"><img src="@/assets/banner.png" height="65"/></a>
-            <div class="row collapse navbar-collapse justify-content-between py-3 py-lg-0">
+            <div class="row collapse navbar-collapse justify-content-between py-3 py-lg-0 pe-0 pe-sm-4">
                 <!-- 搜尋區 -->
                 <div class="col text-start">
                     <div class="d-none d-md-block">
@@ -83,25 +83,23 @@
                         <img src="@/assets/user_avatar.png" class="img-fluid rounded-circle" />
                     </div>
                 </div>
-                <!-- 登出/登入 -->
-                <div v-if="user.logged_in" class="col-auto">
-                    <button
-                        id="login-btn"
-                        class="btn bg-dark-green text-white me-0 me-lg-5"
-                        @click="toggleLoginStatus"
-                    >登出</button>
-                </div>
-                <div v-if="!user.logged_in" class="col-auto">
-                    <button
-                        id="login-btn"
-                        class="btn bg-dark-green text-white me-0 me-lg-5"
-                        @click="dialogFunc.toggleLoginDialogModal"
-                    >登入</button>
-                </div>
             </div>
 
-            <!-- 小於LG時，右側填充物 -->
-            <div id="spacer"></div>
+            <!-- 登出/登入 -->
+            <div v-if="user.logged_in" class="col-auto">
+                <button
+                    id="login-btn"
+                    class="btn bg-dark-green text-white me-0 me-lg-5"
+                    @click="toggleLoginStatus"
+                >登出</button>
+            </div>
+            <div v-if="!user.logged_in" class="col-auto">
+                <button
+                    id="login-btn"
+                    class="btn bg-dark-green text-white me-0 me-md-3 me-lg-5"
+                    @click="dialogFunc.toggleLoginDialogModal"
+                >登入</button>
+            </div>
         </div>
     </nav>
 
@@ -111,7 +109,7 @@
 
         <div id="wrapper" class="row flex-nowrap">
             <!-- 左側邊欄 -->
-            <div id="sidebar" class="col-auto text-white min-vh-100 bg-light1 py-3">
+            <div id="sidebar" class="col-auto text-white bg-light1 py-3">
 
                 <!-- 資訊區 -->
                 <div class="side-navbar d-flex d-sm-none row mx-3 align-items-center mb-4">
@@ -150,23 +148,27 @@
                                         :to="notify.to ?? '#'"
                                         @click="onNotifyClick(notify.click)"
                                     >
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            :width="notify.icon.width"
-                                            :height="notify.icon.height"
-                                            :viewBox="notify.icon.viewBox"
-                                            :fill="notify.icon.fill"
-                                        >
-                                            <path v-for="(path, index) in notify.icon.paths" :key="index"
-                                                :d="path.d"
-                                                :fill="path.fill"
-                                                :stroke="path.stroke"
-                                                :stroke-width="path.strokeWidth"
-                                                :stroke-linecap="path.strokeLinecap"
-                                                :stroke-linejoin="path.strokeLinejoin"
-                                            />
-                                        </svg>
-                                        {{ notify.content }}
+                                        <div class="row">
+                                            <div class="col-auto">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    :width="notify.icon.width"
+                                                    :height="notify.icon.height"
+                                                    :viewBox="notify.icon.viewBox"
+                                                    :fill="notify.icon.fill"
+                                                >
+                                                    <path v-for="(path, index) in notify.icon.paths" :key="index"
+                                                        :d="path.d"
+                                                        :fill="path.fill"
+                                                        :stroke="path.stroke"
+                                                        :stroke-width="path.strokeWidth"
+                                                        :stroke-linecap="path.strokeLinecap"
+                                                        :stroke-linejoin="path.strokeLinejoin"
+                                                    />
+                                                </svg>
+                                            </div>
+                                            <div class="col ps-0 text-wrap text-justify">{{ notify.content }}</div>
+                                        </div>
                                     </router-link>
                                 </li>
                             </ul>
@@ -278,59 +280,46 @@
                         </router-link>
                     </li>
                 </ul>
-
-                <!-- 登入登出 -->
-                
-                <!-- 登出/登入 -->
-                <div v-if="user.logged_in" class="d-block d-sm-none mt-4 col-auto">
-                    <button
-                        id="login-btn"
-                        class="btn bg-light-green text-white"
-                        @click="toggleLoginStatus"
-                    >登出</button>
-                </div>
-                <div v-if="!user.logged_in" class="d-block d-sm-none mt-4 col-auto">
-                    <button
-                        id="login-btn"
-                        class="btn bg-light-green text-white"
-                        @click="dialogFunc.toggleLoginDialogModal"
-                    >登入</button>
-                </div>
             </div>
 
             <!-- 右側內容 -->
-            <div class="col">
+            <div id="content" class="col">
                 <router-view />
             </div>
         </div>
     </div>
 
     <!-- DIALOG 區 -->
-    <LoginDialog ref="loginDialogRef" />
     <PostDialog ref="postDialogRef" :post="currentPost" />
     <DraftDialog ref="draftDialogRef" :post="currentPost" />
     <AdminPostDialog ref="adminPostDialogRef" :post="currentAdminPost" />
     <MissingEnvelopeDialogModal ref="missingEnvelopeDialogRef" />
     <AdminEnvelopeDialogModal ref="adminEnvelopeDialogRef" />
+    <LoginDialog ref="loginDialogRef" />
+    
+    <!-- TOAST 區 -->
+    <NewNotifyToast ref="newNotifyToastRef" />
 </template>
 
 <script>
 // 引入component進行使用
-import LoginDialog from '@/components/LoginDialog.vue';
 import PostDialog from '@/components/PostDialog.vue';
 import DraftDialog from '@/components/DraftDialog.vue';
 import AdminPostDialog from '@/components/AdminPostDialog.vue';
 import MissingEnvelopeDialogModal from '@/components/MissingEnvelopeDialog.vue';
 import AdminEnvelopeDialogModal from '@/components/AdminEnvelopeDialog.vue';
+import LoginDialog from '@/components/LoginDialog.vue';
+import NewNotifyToast from '@/components/NewNotifyToast.vue';
 
 export default {
     components: {
-        LoginDialog,
         PostDialog,
         DraftDialog,
         AdminPostDialog,
         MissingEnvelopeDialogModal,
         AdminEnvelopeDialogModal,
+        LoginDialog,
+        NewNotifyToast,
     }
 };
 </script>
@@ -621,19 +610,21 @@ const navLinkClass = (name) => ({
 })
 
 // Dialog Ref
-const loginDialogRef = ref()
 const postDialogRef = ref()
 const draftDialogRef = ref()
 const adminPostDialogRef = ref()
 const missingEnvelopeDialogRef = ref()
 const adminEnvelopeDialogRef = ref()
+const loginDialogRef = ref()
+const newNotifyToastRef = ref()
 const dialogFunc = {
-    toggleLoginDialogModal: () => loginDialogRef.value.toggleLoginDialogModal(),
     togglePostDialogModal: ()=> postDialogRef.value.togglePostDialogModal(),
     toggleDraftDialogModal: ()=> draftDialogRef.value.toggleDraftDialogModal(),
     toggleAdminPostDialogModal: ()=> adminPostDialogRef.value.toggleAdminPostDialogModal(),
     toggleMissingEnvelopeDialogModal: ()=> missingEnvelopeDialogRef.value.toggleMissingEnvelopeDialogModal(),
     toggleAdminEnvelopeDialogModal: ()=> adminEnvelopeDialogRef.value.toggleAdminEnvelopeDialogModal(),
+    toggleLoginDialogModal: () => loginDialogRef.value.toggleLoginDialogModal(),
+    showNewNotifyToast: ()=> newNotifyToastRef.value.showNewNotifyToast(),
 }
 
 // user
@@ -770,6 +761,7 @@ provide('addNotification', addNotification)
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: var(--dark-black-color);
+    overflow-x: hidden;
 }
 
 #main {
@@ -879,108 +871,125 @@ provide('addNotification', addNotification)
     }
 }
 
-#sidebar {
-    min-width: 250px;
-    max-width: 250px;
-    font-size: 20px;
-    transition: all 0.2s;
+#wrapper {
+    height: calc(100vh - 65px);
 
-    @media (max-width: 992px) {
-        margin-left: -250px !important;
-    }
+    & > #sidebar {
+        min-width: 250px;
+        max-width: 250px;
+        font-size: 20px;
+        transition: all 0.2s;
 
-    .side-navbar {
-        .user-avatar {
-            width: 90px;
-            height: 90px;
-            color: #fff;
-            font-size: 18px;
+        display: inline-block !important;
+        vertical-align: top;
+        height: 100% !important;
+        overflow: auto;
+
+        @media (max-width: 768px) {
+            margin-left: -250px !important;
+        }
+
+        .side-navbar {
+            .user-avatar {
+                width: 90px;
+                height: 90px;
+                color: #fff;
+                font-size: 18px;
+            }
+
+            .notify-badge {
+                background-color: #FF4D00;
+                top: 8px;
+                left: 16px;
+                padding: 4px;
+            }
+
+            .dropdown-menu-center {
+                left: 0% !important;
+                right: auto !important;
+                transform: translate(-170px, 45px) !important;
+            }
+            .arrow-up {
+                width: 220px;
+                border-color: #94DBD7;
+                background-color: #94DBD7;
+                border-radius: 25px;
+                padding-top: 22px;
+                padding-bottom: 22px;
+
+                &::before, &::after {
+                    content: '';
+                    position: absolute;
+                    display: inline-block;
+                }
+
+                &::before {
+                    top: -13px;
+                    right: 0%;
+                    transform: translate(-20px, 0) !important;
+                    border-left: 13px solid transparent;
+                    border-right: 13px solid transparent;
+                    border-bottom: 13px solid #94DBD7;
+                }
+
+                &::after {
+                    top: -12px;
+                    right: 0%;
+                    transform: translate(-20px, 0) !important;
+                    border-left: 12px solid transparent;
+                    border-right: 12px solid transparent;
+                    border-bottom: 12px solid #94DBD7;
+                }
+
+                .dropdown-item {
+                    background-color: #FFF;
+                    color: #000;
+                }
+
+                li::after {
+                    content: '';
+                    width: calc(100% - 60px);
+                    margin: 0 30px;
+                    position: absolute;
+                    display: block;
+                    border-bottom: 1px solid #DDDDDD;
+                }
+            }
+        }
+
+        .nav-sub-title {
+            font-size: 16px;
+        }
+
+        hr {
+            border-top: 2px solid var(--dark-black-color);
+        }
+
+        a {
+            font-weight: 400;
+            color: var(--dark-black-color);
+
+            &:hover, &:visited, &:link, &:active {
+                color: var(--dark-black-color);
+            }
+
+            &.active {
+                color: var(--light-green-color);
+            }
         }
 
         .notify-badge {
             background-color: #FF4D00;
-            top: 8px;
-            left: 16px;
-            padding: 4px;
-        }
-
-        .dropdown-menu-center {
-            left: 50% !important;
-            right: auto !important;
-            transform: translate(-50%, 45px) !important;
-        }
-        .arrow-up {
-            border-color: #94DBD7;
-            background-color: #94DBD7;
-            border-radius: 25px;
-            padding-top: 22px;
-            padding-bottom: 22px;
-
-            &::before, &::after {
-                content: '';
-                position: absolute;
-                display: inline-block;
-            }
-
-            &::before {
-                top: -13px;
-                left: 50%;
-                transform: translate(-50%, 0) !important;
-                border-left: 13px solid transparent;
-                border-right: 13px solid transparent;
-                border-bottom: 13px solid #94DBD7;
-            }
-
-            &::after {
-                top: -12px;
-                left: 50%;
-                transform: translate(-50%, 0) !important;
-                border-left: 12px solid transparent;
-                border-right: 12px solid transparent;
-                border-bottom: 12px solid #94DBD7;
-            }
-
-            .dropdown-item {
-                background-color: #FFF;
-                color: #000;
-            }
-
-            li::after {
-                content: '';
-                width: calc(100% - 60px);
-                margin: 0 30px;
-                position: absolute;
-                display: block;
-                border-bottom: 1px solid #DDDDDD;
-            }
+            top: 15px;
+            left: 18px;
         }
     }
 
-    .nav-sub-title {
-        font-size: 16px;
-    }
-
-    hr {
-        border-top: 2px solid var(--dark-black-color);
-    }
-
-    a {
-        font-weight: 400;
-        color: var(--dark-black-color);
-
-        &:hover, &:visited, &:link, &:active {
-            color: var(--dark-black-color);
-        }
-
-        &.active {
-            color: var(--light-green-color);
-        }
-    }
-
-    .notify-badge {
-        background-color: #FF4D00;
-        top: 15px;
-        left: 18px;
+    #content {
+        display: inline-block !important;
+        vertical-align: top;
+        height: 100% !important;
+        overflow: auto;
     }
 }
 
@@ -989,7 +998,7 @@ provide('addNotification', addNotification)
         margin-left: -250px;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: 768px) {
         width: calc(100vw + 250px) !important;
 
         & > #sidebar {

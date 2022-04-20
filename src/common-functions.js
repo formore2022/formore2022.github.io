@@ -29,6 +29,9 @@ const _replaceText = (content, showMoreStr) => {
     str = str.replaceAll(/([#@](?:[^\x00-\x7F]|\w)+)/gi, (match) => `<span class="hash-tag cursor-pointer">${match}</span>`);
     str = str.replaceAll(/!\[show_more\]/gi, showMoreStr);
     str = str.replaceAll(/!\[strong text='([^']*)'\]/gi, (_, match) => `<span class="text-light-green fw-bold">${match}</span>`);
+    str = str.replaceAll(/!\[link text='([^']*)' href='([^']*)'\]/gi, (_, text, href) => 
+        `<a href="${href}" class="text-light-green text-decoration-none" target="_blank">${text}</a>`
+    );
     return str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, _replaceImageTagMapper);
 }
 

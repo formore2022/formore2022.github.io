@@ -26,7 +26,7 @@
                     </div>
 
                     <!-- LOGO -->
-                    <svg id="admin-logo" width="200" height="226" viewBox="0 0 266 300" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <svg id="admin-logo" viewBox="0 0 266 300" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <rect width="266" height="300" fill="url(#pattern0)"/>
                         <defs>
                             <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -114,6 +114,12 @@ defineExpose({ toggleAdminPostDialogModal })
         padding-right: 0;
         z-index: 999;
 
+        @media (max-width: 480px) {
+            margin-top: calc(-3rem);
+            width: auto !important;
+            height: 115px;
+        }
+
         .btn-close {
             color: var(--dark-gray-color) !important;
             opacity: 1;
@@ -146,5 +152,18 @@ defineExpose({ toggleAdminPostDialogModal })
     position: absolute;
     top: 0;
     right: 30px;
+    height: 226px;
+    
+    @media (max-width: 992px) {
+        top: 30px;
+        right: 20px;
+        height: 113px;
+    }
+    
+    @media (max-width: 480px) {
+        top: 45px;
+        right: 10px;
+        height: 90.4px;
+    }
 }
 </style>
