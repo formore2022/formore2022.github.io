@@ -213,7 +213,7 @@
 
                 <ul class="nav flex-column align-items-start">
                     <li v-for="route in secondRoutes" :key="route.name" class="nav-item">
-                        <a :class="navLinkClass(route.name)" href="javascript:void(0)">
+                        <router-link :class="navLinkClass(route.name)" :to="route.path">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 :width="route.icon.width"
@@ -231,7 +231,7 @@
                                 />
                             </svg>
                             <span class="ms-2">{{ route.text }}</span>
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
 
@@ -332,6 +332,9 @@ import { getNavLinkClass } from '@/common-functions.js';
 // 讀入user.json、posts.json、admin_post.json及notifications.json
 import userJson from '@/assets/user.json';
 import postsJson from '@/assets/posts.json';
+import for01PostsJson from '@/assets/for_01_posts.json';
+import for02PostsJson from '@/assets/for_02_posts.json';
+import for03PostsJson from '@/assets/for_03_posts.json';
 import adminPostsJson from '@/assets/admin_posts.json';
 import notificationsJson from '@/assets/notifications.json';
 
@@ -386,8 +389,8 @@ const mainRoutes = ref([
 ])
 const secondRoutes = ref([
     {
-        name: 'xx',
-        path: '#',
+        name: 'for01',
+        path: '/for01',
         text: 'For 知識',
         icon: {
             width: 23,
@@ -407,8 +410,8 @@ const secondRoutes = ref([
         }
     },
     {
-        name: 'xx',
-        path: '#',
+        name: 'for02',
+        path: '/for02',
         text: 'For 靠背',
         icon: {
             width: 23,
@@ -428,8 +431,8 @@ const secondRoutes = ref([
         }
     },
     {
-        name: 'xx',
-        path: '#',
+        name: 'for03',
+        path: '/for03',
         text: 'For 告白',
         icon: {
             width: 23,
@@ -650,6 +653,12 @@ const myDrafts = computed(() =>                                             // �
     [...posts].filter(post => post.user === user.userid && post.is_draft)
 )
 
+// For post
+const for01Posts = reactive(for01PostsJson)  // For 知識 文章objects
+const for02Posts = reactive(for02PostsJson)  // For 靠背 文章objects
+const for03Posts = reactive(for03PostsJson)  // For 告白 文章objects
+
+// Admin Post
 const adminPosts = reactive(adminPostsJson)                             // 管理員文章objects
 const adminPostKey = ref()                                              // 管理員文章key
 const setAdminPostKey = (key) => adminPostKey.value = key               // setter
@@ -682,6 +691,10 @@ provide('setAdminPostKey', setAdminPostKey)
 provide('hotPosts', hotPosts)
 provide('myPosts', myPosts)
 provide('myDrafts', myDrafts)
+// for post
+provide('for01Posts', for01Posts)
+provide('for02Posts', for02Posts)
+provide('for03Posts', for03Posts)
 // notification
 provide('addNotification', addNotification)
 </script>
