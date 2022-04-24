@@ -3,14 +3,17 @@
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-light-green py-0 vw-100">
         <div class="container-fluid">
             <!-- 小於LG時的漢堡鈕 -->
-            <label for="sidebar-toggle" type="button" id="sidebarCollapse" class="navbar-toggler" @click="reDrawPosts">
+            <label type="button" id="sidebarCollapse" class="px-2" @click="sidebarToggle = !sidebarToggle">
                 <i class="fas fa-align-left"></i>
                 <span class="navbar-toggler-icon"></span>
+                <span v-if="user.logged_in && user.notifications.main" class="d-block d-md-none notify-badge position-absolute translate-middle rounded-circle">
+                    <span class="visually-hidden">New alerts</span>
+                </span>
             </label>
 
             <!-- 主導覽列內容 -->
-            <a class="navbar-brand p-0" href="/"><img src="@/assets/banner.png" height="65"/></a>
-            <div class="row collapse navbar-collapse justify-content-between py-3 py-lg-0 pe-0 pe-sm-4">
+            <router-link class="navbar-brand p-0" to="/hot"><img src="@/assets/banner.png" height="65"/></router-link>
+            <div class="row collapse navbar-collapse justify-content-between pe-0 pe-sm-4">
                 <!-- 搜尋區 -->
                 <div class="col text-start">
                     <div class="d-none d-md-block">
@@ -105,28 +108,30 @@
 
     <!-- 主內容區 -->
     <div id="main" class="container-fluid">
-        <input id='sidebar-toggle' type='checkbox' hidden="true" />
+        <input id='sidebar-toggle' type='checkbox' hidden="true" v-model="sidebarToggle" />
+
+        <div class="overlay" @click="sidebarToggle = !sidebarToggle"></div>
 
         <div id="wrapper" class="row flex-nowrap">
             <!-- 左側邊欄 -->
             <div id="sidebar" class="col-auto text-white bg-light1 py-3">
 
                 <!-- 資訊區 -->
-                <div class="side-navbar d-flex d-sm-none row mx-3 align-items-center mb-4">
+                <div v-if="user.logged_in" class="side-navbar d-flex d-sm-none row mx-3 align-items-center mb-4">
                     <!-- 大頭貼 -->
-                    <div v-if="user.logged_in" class="col-auto px-2">
+                    <div class="col-auto px-2">
                         <div class="user-avatar rounded-circle d-flex justify-content-center align-items-center">
                             <img src="@/assets/user_avatar.png" class="img-fluid rounded-circle" />
                         </div>
                     </div>
                     <!-- 訊息 -->
-                    <div v-if="user.logged_in" class="col px-2">
+                    <div class="col px-2">
                         <svg width="28" height="25" viewBox="0 0 32 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M31.4991 10.3323C29.9429 5.51167 26.4977 2.45883 21.6719 0.962869C15.2945 -1.01293 9.40728 0.016564 4.32643 4.37967C1.95341 6.38084 0.446996 9.18158 0.109955 12.219C0.0844229 12.3534 0.0476488 12.4856 0 12.6142V14.6939C0.377207 16.0146 0.586429 17.414 1.17591 18.6381C1.79746 19.9306 2.79317 21.0507 3.59798 22.2644C3.75069 22.5036 3.92479 22.8586 3.8637 23.1008C3.46817 24.7349 3.00392 26.3408 2.58089 27.9615C2.50454 28.2586 2.39 28.6538 2.52591 28.8529C2.63892 29.0148 3.10776 29.0207 3.39945 28.9762C5.99549 28.5924 8.52967 27.8838 10.939 26.8682C11.2438 26.7657 11.5725 26.7507 11.8858 26.8251C17.7929 27.9868 23.1333 26.9083 27.6766 22.9314C30.0575 20.8516 31.5083 18.2251 31.887 15.0891C31.9143 14.9553 31.9521 14.8237 32 14.6954V12.6156C31.8351 11.8565 31.7373 11.0736 31.4991 10.3323ZM7.4235 15.7695C7.14594 15.7713 6.87074 15.7198 6.61362 15.6181C6.3565 15.5164 6.12249 15.3664 5.92495 15.1768C5.72741 14.9871 5.5702 14.7614 5.46232 14.5126C5.35443 14.2639 5.29798 13.9968 5.29618 13.7268C5.29437 13.4568 5.34725 13.1891 5.4518 12.939C5.55635 12.6889 5.71052 12.4613 5.90551 12.2691C6.1005 12.0769 6.33249 11.924 6.58823 11.8191C6.84397 11.7141 7.11845 11.6592 7.39601 11.6575C7.67357 11.6557 7.94877 11.7071 8.20589 11.8088C8.46301 11.9105 8.69703 12.0605 8.89457 12.2502C9.09211 12.4399 9.24931 12.6655 9.35719 12.9143C9.46508 13.1631 9.52153 13.4301 9.52334 13.7001C9.52514 13.9701 9.47226 14.2378 9.36771 14.4879C9.26316 14.738 9.10899 14.9657 8.914 15.1578C8.71901 15.35 8.48703 15.5029 8.23129 15.6079C7.97555 15.7128 7.70106 15.7677 7.4235 15.7695ZM16.0183 15.7695C15.6006 15.773 15.1911 15.656 14.8417 15.4333C14.4923 15.2105 14.2186 14.8921 14.0551 14.5181C13.8916 14.1441 13.8457 13.7314 13.9233 13.3321C14.0008 12.9327 14.1982 12.5647 14.4906 12.2745C14.783 11.9842 15.1573 11.7848 15.5661 11.7013C15.975 11.6179 16.4001 11.6542 16.7877 11.8056C17.1754 11.957 17.5083 12.2168 17.7442 12.5522C17.9802 12.8875 18.1087 13.2834 18.1136 13.6897C18.1251 13.9624 18.0791 14.2346 17.9783 14.4893C17.8776 14.7441 17.7243 14.976 17.5278 15.1709C17.3313 15.3658 17.0959 15.5194 16.836 15.6224C16.5761 15.7253 16.2973 15.7754 16.0168 15.7695H16.0183ZM24.5704 15.7695C24.0098 15.7648 23.4742 15.5436 23.0812 15.1547C22.6883 14.7658 22.4703 14.2409 22.4751 13.6956C22.48 13.1504 22.7073 12.6293 23.1071 12.247C23.507 11.8648 24.0465 11.6527 24.607 11.6575C25.1676 11.6622 25.7033 11.8833 26.0962 12.2723C26.4891 12.6612 26.7072 13.186 26.7023 13.7313C26.6974 14.2766 26.4701 14.7977 26.0703 15.1799C25.6705 15.5621 25.1309 15.7742 24.5704 15.7695Z" fill="#3c8585"/>
                         </svg>
                     </div>
                     <!-- 通知 -->
-                    <div v-if="user.logged_in" class="col px-2 position-relative">
+                    <div class="col px-2 position-relative">
                         <div class="dropdown">
                             <svg 
                                 width="21" 
@@ -298,7 +303,7 @@
     <LoginDialog ref="loginDialogRef" />
     
     <!-- TOAST 區 -->
-    <NewNotifyToast ref="newNotifyToastRef" />
+    <NewNotifyToast />
 </template>
 
 <script>
@@ -341,6 +346,9 @@ import notificationsJson from '@/assets/notifications.json';
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
 //（APP的上層就是AppCreate時use的那些plugin們）
 const redrawVueMasonry = inject('redrawVueMasonry')
+
+// sidebar toggle
+const sidebarToggle = ref(false)
 
 // Router Map
 const mainRoutes = ref([
@@ -619,7 +627,6 @@ const adminPostDialogRef = ref()
 const missingEnvelopeDialogRef = ref()
 const adminEnvelopeDialogRef = ref()
 const loginDialogRef = ref()
-const newNotifyToastRef = ref()
 const dialogFunc = {
     togglePostDialogModal: ()=> postDialogRef.value.togglePostDialogModal(),
     toggleDraftDialogModal: ()=> draftDialogRef.value.toggleDraftDialogModal(),
@@ -627,7 +634,6 @@ const dialogFunc = {
     toggleMissingEnvelopeDialogModal: ()=> missingEnvelopeDialogRef.value.toggleMissingEnvelopeDialogModal(),
     toggleAdminEnvelopeDialogModal: ()=> adminEnvelopeDialogRef.value.toggleAdminEnvelopeDialogModal(),
     toggleLoginDialogModal: () => loginDialogRef.value.toggleLoginDialogModal(),
-    showNewNotifyToast: ()=> newNotifyToastRef.value.showNewNotifyToast(),
 }
 
 // user
@@ -825,7 +831,14 @@ provide('addNotification', addNotification)
         border: 3px solid#83F3F3;
     }
 
-    .notify-badge {
+    & #sidebarCollapse .notify-badge {
+        background-color: #FF4D00;
+        top: 25px;
+        left: 22px;
+        padding: 4px;
+    }
+
+    & .navbar-collapse .notify-badge {
         background-color: #FF4D00;
         top: 4px;
         left: 11px;
@@ -899,7 +912,10 @@ provide('addNotification', addNotification)
         overflow: auto;
 
         @media (max-width: 768px) {
-            margin-left: -250px !important;
+            position: fixed;
+            top: 65px;
+            left: -250px;
+            z-index: 1000;
         }
 
         .side-navbar {
@@ -1006,17 +1022,32 @@ provide('addNotification', addNotification)
     }
 }
 
-#sidebar-toggle:checked ~ #wrapper {
-    & > #sidebar {
-        margin-left: -250px;
-    }
+#sidebar-toggle:checked {
 
-    @media (max-width: 768px) {
-        width: calc(100vw + 250px) !important;
-
+    & ~ #wrapper{
         & > #sidebar {
-            margin-left: 0 !important;
+            left: 0;
         }
     }
+
+    & ~ .overlay {
+        display: block;
+        opacity: 1;
+    }
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    /* full screen */
+    width: 100vw;
+    height: 100vh;
+    /* transparent black */
+    background: rgba(0, 0, 0, 0.7);
+    /* middle layer, i.e. appears below the sidebar */
+    z-index: 998;
+    opacity: 0;
+    /* animate the transition */
+    transition: all 0.5s ease-in-out;
 }
 </style>

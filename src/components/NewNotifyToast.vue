@@ -1,24 +1,14 @@
 <template>
-    <div ref="thisToastRef" class="toast fade" id="newNotifyToast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div v-if="user.logged_in && user.notifications?.main" id="newNotifyToast">
         <div class="toast-body">你有新訊息！</div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Toast } from 'bootstrap';
+import { inject } from 'vue';
 
-// 定義參數
-const thisToastRef = ref()
-const show = ref(false)
-
-// 定義modal可被呼叫的方法，並Expose給父元素
-let thisToast;
-onMounted(() => { thisToast = new Toast(thisToastRef.value, { delay: 2000 }) })
-const showNewNotifyToast = () => {
-    thisToast.show();
-}
-defineExpose({ showNewNotifyToast })
+// inject需要用的參數進行使用，需在parent或grand-parent進行provide
+const user = inject('user')
 </script>
 
 <style scoped lang="scss">
@@ -31,6 +21,12 @@ defineExpose({ showNewNotifyToast })
     border: none;
     border-radius: 15px;
     background-color: #61b09f5A;
+    transition: all 0.5s;
+
+    @media (max-width: 768px) {
+        top: 100px;
+        right: 30px;
+    }
 
     .toast-body {
         color: var(--dark-green-color);
