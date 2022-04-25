@@ -43,7 +43,7 @@
         "comments": 12,
         "shares": 102,
         "comment_details": [
-           {
+            {
                 "is_formore": false,
                 "user": "Mormore",
                 "date_ago": 5,
@@ -127,7 +127,7 @@
         "comments": 12,
         "shares": 102,
         "comment_details": [
-         {
+            {
                 "is_formore": false,
                 "user": "Mormore",
                 "date_ago": 5,
