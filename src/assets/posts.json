@@ -9,10 +9,42 @@
         "likes": 10358,
         "liked": false,
         "comments": 1004,
-        "shares": 356,
+        "shares": 1116,
         "comment_details": [
             {
                 "is_formore": true,
+                "user": "ForMore",
+                "date_ago": 1,
+                "content": "http://formore.com/help.us/find.out/the.truth?/"
+            },
+            {
+                "is_formore": false,
+                "user": "Amy_chen",
+                "date_ago": 2,
+                "content": "雖然我不認識這叫焦焦的同學，但每個人都有發文的權利吧"
+            },
+            {
+                "is_formore": false,
+                "user": "Jemmy_2613",
+                "date_ago": 3,
+                "content": "希望一切都順利...."
+            }
+        ]
+    },
+    {
+        "is_draft": false,
+        "department": "會計系",
+        "user": "yuun_1024",
+        "date_ago": 91,
+        "title": "急!!! 歐趴糖可以買什麼?",
+        "content": "第一次送直屬歐趴糖，突然不知道可以買什麼...\n還請有經驗的大家推薦我!!!\n![show_more]",
+        "likes": 302,
+        "liked": false,
+        "comments": 12,
+        "shares": 102,
+        "comment_details": [
+         {
+                "is_formore": false,
                 "user": "Formore",
                 "date_ago": 5,
                 "content": "http://formore.com/help.us/find.out/the.truth?/"
@@ -30,19 +62,6 @@
                 "content": "希望一切都順利...."
             }
         ]
-    },
-    {
-        "is_draft": false,
-        "department": "會計系",
-        "user": "yuun_1024",
-        "date_ago": 91,
-        "title": "急!!! 歐趴糖可以買什麼?",
-        "content": "第一次送直屬歐趴糖，突然不知道可以買什麼...\n還請有經驗的大家推薦我!!!\n![show_more]",
-        "likes": 302,
-        "liked": false,
-        "comments": 12,
-        "shares": 102,
-        "comment_details": []
     },
     {
         "is_draft": false,
