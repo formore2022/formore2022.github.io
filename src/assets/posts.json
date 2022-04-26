@@ -234,10 +234,10 @@
         "shares": 30,
         "comment_details": [
             {
-                "is_formore": true,
-                "user": "Formore",
+                "is_formore": false,
+                "user": "ken_88304",
                 "date_ago": 0,
-                "content": "http://formore.com/help.us/find.out/the.truth?/"
+                "content": "傻爆眼🙄，不知道有多人擔心你嗎?"
             },
             {
                 "is_formore": false,
