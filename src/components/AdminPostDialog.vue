@@ -78,7 +78,16 @@ const agree = ref(false)
 
 // 定義modal可被呼叫的方法，並Expose給父元素
 let thisModal;
-onMounted(() => { thisModal = new Modal(thisModalRef.value, {}) })
+onMounted(() => {
+    thisModal = new Modal(thisModalRef.value, {});
+
+    // modal關閉後該做的事
+    thisModalRef.value.addEventListener('hidden.bs.modal', () => {
+        document.querySelectorAll('iframe').forEach(iframe => {
+            iframe.contentWindow.postMessage('{"event":"command", "func":"stopVideo", "args":""}', '*');
+        });
+    });
+})
 const toggleAdminPostDialogModal = () => {
     thisModal.toggle();
     adjustMultipleModalsLayer();
