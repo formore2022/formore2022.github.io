@@ -66,7 +66,7 @@ const _replaceYouTubeTagMapper = (match) => {
         return `
             <div class="ratio ratio-16x9">
                 <iframe
-                    src="https://www.youtube.com/embed/${videoId}?rel=0"
+                    src="https://www.youtube.com/embed/${videoId}?rel=0&enablejsapi=1"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                 ></iframe>
