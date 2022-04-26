@@ -151,42 +151,73 @@
         "user": "yuun_1024",
         "date_ago": 59,
         "title": "急！！！歐趴糖可以買什麼？",
-        "content": "還在擔心聖誕節要一個人過?\n還在考慮要去耶誕城人擠人卻什麼也看不到?\n![show_more]",
-        "likes": 1543,
+        "content": "第一次送直屬歐趴糖，突然不知道可以買什麼...\n還請有經驗的大家推薦我!!!\n![show_more]",
+        "likes": 910,
         "liked": false,
-        "comments": 890,
-        "shares": 203,
-        "comment_details": []
+        "comments": 310,
+        "shares": 220,
+        "comment_details": [
+            {
+                "is_formore": false,
+                "user": "LioYio22",
+                "date_ago": 57,
+                "content": "我聽說英文系某個學姊一次就收到芭比跟凡娜的歐趴糖欸！超好的~"
+            },
+            {
+                "is_formore": false,
+                "user": "Yoga0324",
+                "date_ago": 58,
+                "content": "哇！超羨慕的啦~ 他們可是FMU兩大風雲人物欸！"
+            },
+            {
+                "is_formore": false,
+                "user": "_MingXin_",
+                "date_ago": 58,
+                "content": "我看學長姊都送巧克力，但應該心意到就好啦！"
+            },
+            {
+                "is_formore": false,
+                "user": "YuuuMiii_23",
+                "date_ago": 12,
+                "content": "沒直屬的我...可憐...."
+            }
+        ]
     },
     {
         "is_draft": false,
-        "department": "會計系",
-        "user": "yuun_1024",
+        "department": "醫學系",
+        "user": "mark_lin",
         "date_ago": 91,
-        "title": "急!!! 歐趴糖可以買什麼?",
-        "content": "第一次送直屬歐趴糖，突然不知道可以買什麼...\n還請有經驗的大家推薦我!!!\n![show_more]",
-        "likes": 302,
+        "title": "選課系統有夠當!!!",
+        "content": "大家有覺得最近選課系統很當嗎?\n只是想點開看「課程內容」，中間的圈圈就一直跑...\n是不知道醫學系沒搶到課，很容易延畢嗎...🥺\n氣鼠！\n![show_more]",
+        "likes": 870,
         "liked": false,
-        "comments": 12,
-        "shares": 102,
+        "comments": 210,
+        "shares": 290,
         "comment_details": [
-         {
+            {
                 "is_formore": false,
-                "user": "Mormore",
-                "date_ago": 5,
-                "content": "http://formore.com/help.us/find.out/the.truth?/"
+                "user": "5yuJ_15",
+                "date_ago": 88,
+                "content": "真的...當到不行..."
             },
             {
                 "is_formore": false,
-                "user": "Amy_chen",
-                "date_ago": 7,
-                "content": "雖然我不認識這叫焦焦的同學，但每個人都有發文的權利吧"
+                "user": "Kenken1224",
+                "date_ago": 89,
+                "content": "我還特別去網咖，根本沒用！傻眼🙄"
             },
             {
                 "is_formore": false,
-                "user": "Jemmy_2613",
-                "date_ago": 10,
-                "content": "希望一切都順利...."
+                "user": "aArio_wang,
+                "date_ago": 90,
+                "content": "圈圈跑完課都沒了"
+            },
+            {
+                "is_formore": false,
+                "user": "Lisa_Liao",
+                "date_ago": 91,
+                "content": "還是指望人工加選吧~~"
             }
         ]
     },
