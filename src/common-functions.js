@@ -32,7 +32,9 @@ const _replaceText = (content, showMoreStr) => {
     str = str.replaceAll(/!\[link text='([^']*)' href='([^']*)'\]/gi, (_, text, href) => 
         `<a href="${href}" class="text-light-green text-decoration-none" target="_blank">${text}</a>`
     );
-    return str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, _replaceImageTagMapper);
+    str = str.replaceAll(/!\[img src='[^\]]*'[^\]]*\]/gi, _replaceImageTagMapper);
+    str = str.replaceAll(/!\[youtube id='[^\]]*'[^\]]*\]/gi, _replaceYouTubeTagMapper);
+    return str
 }
 
 // 將img tag進行解析
@@ -54,6 +56,24 @@ const _replaceImageTagMapper = (match) => {
     const imgTag = `<img src="${image}" width="${width}" class="img-fluid" />`;
     if (align !== '') return `<div style="text-align: ${align}">${imgTag}</div>`;
     return imgTag;
+}
+
+// 將youtube tag進行解析
+const _replaceYouTubeTagMapper = (match) => {
+    const videoIdMatches = match.match(/id='([^']*)'/i)
+    const videoId = videoIdMatches ? videoIdMatches[1] : '';
+    if (videoId !== '') {
+        return `
+            <div class="ratio ratio-16x9">
+                <iframe
+                    src="https://www.youtube.com/embed/${videoId}?rel=0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        `;
+    }
+    return '';
 }
 
 // 解析第一張圖片

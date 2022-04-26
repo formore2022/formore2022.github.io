@@ -1,5 +1,10 @@
 <template>
-    <div v-if="user.logged_in && user.notifications?.main" id="newNotifyToast">
+    <div
+        v-if="user.logged_in && user.notifications?.main"
+        id="newNotifyToast"
+        class="cursor-pointer"
+        @click="user.notifications.main = false; dialogFunc.toggleAdminEnvelopeDialogModal()"
+    >
         <div class="toast-body">你有新訊息！</div>
     </div>
 </template>
@@ -9,6 +14,7 @@ import { inject } from 'vue';
 
 // inject需要用的參數進行使用，需在parent或grand-parent進行provide
 const user = inject('user')
+const dialogFunc = inject('dialogFunc')
 </script>
 
 <style scoped lang="scss">

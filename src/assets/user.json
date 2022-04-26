@@ -5,7 +5,7 @@
     "userid": "GReeeeNGirl",
     "username": "焦焦",
     "notifications": {
-        "main": true,
+        "main": false,
         "myPost": true,
         "myDraft": true
     }

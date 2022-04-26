@@ -26,8 +26,19 @@
                     </div>
                 </div>
                 <div class="modal-body">
-                    <input id="title-input" class="form-control" placeholder="標題" v-model="post.title" />
-                    <textarea ref="contentInputRef" id="content-input" class="form-control mt-4" placeholder="文章內容" v-model="content" @input="adjustHeight"/>
+                    <input
+                        ref="titleInputRef"
+                        id="title-input"
+                        class="form-control"
+                        placeholder="標題"
+                        v-model="post.title" />
+                    <textarea
+                        ref="contentInputRef"
+                        id="content-input" 
+                        class="form-control mt-4"
+                        placeholder="文章內容"
+                        v-model="content"
+                        @input="adjustHeight" />
                 </div>
                 <div class="modal-footer d-block border-0 bg-light2">
                     <!-- 按鈕區 -->
@@ -96,6 +107,7 @@ const dialogFunc = inject('dialogFunc')
 
 // 定義參數
 const thisModalRef = ref()
+const titleInputRef = ref()
 const contentInputRef = ref()
 const content = computed(() => parseDraft(props.post?.content))
 
@@ -116,7 +128,9 @@ const send = () => {
 // 定義modal可被呼叫的方法，並Expose給父元素
 let thisModal;
 onMounted(() => { 
-    thisModal = new Modal(thisModalRef.value, {}) 
+    thisModal = new Modal(thisModalRef.value, {});
+
+    // modal關閉後該做的事
     thisModalRef.value.addEventListener('hidden.bs.modal', () => {
         if (!user?.adminEnvelopeIsOpened) {
             user.notifications.main = true;
@@ -141,16 +155,22 @@ onMounted(() => {
                     ]
                 }
             })
-            dialogFunc.showNewNotifyToast();
         }
-    })
+    });
+
+    // modal開啟後該做的事
+    thisModalRef.value.addEventListener('shown.bs.modal', () => {
+       // 調整content input的高度 
+        setTimeout(()=>{
+            contentInputRef.value.dispatchEvent(new Event('input', {bubbles:true}));
+        }, 300)
+       // 設定title input的focus
+       titleInputRef.value.focus() 
+    });
 })
 const toggleDraftDialogModal = () => {
     thisModal.toggle();
     adjustMultipleModalsLayer();
-    setTimeout(()=>{
-        contentInputRef.value.dispatchEvent(new Event('input', {bubbles:true}));
-    }, 300)
 }
 defineExpose({ toggleDraftDialogModal })
 </script>
@@ -206,6 +226,14 @@ defineExpose({ toggleDraftDialogModal })
     &::placeholder {
         font-size: 30px;
         color: var(--dark-gray-color) !important;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 26px;
+
+        &::placeholder {
+            font-size: 26px;
+        }
     }
 }
 
